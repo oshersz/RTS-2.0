@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da1ca8b0a5e035344a526fec935423cf, type: 3}
+  m_Name: Earrings
+  m_EditorClassIdentifier: 
+  id: 12
+  itemSprite: {fileID: 21300000, guid: 5b0db5742bc69c845a790f3150ddf13d, type: 3}
+  itemType: 5
+  rarity: 0
+  owned: 1
+  itemName: Earrings
+  value: 25
+  equipped: 1
+  equipmentType: 4
+  weaponType: 0
+  weaponRangeType: 0
+  projectilePrefab: {fileID: 0}
+  stats:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
