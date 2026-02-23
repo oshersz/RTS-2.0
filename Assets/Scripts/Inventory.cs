@@ -93,26 +93,28 @@ public class Inventory : MonoBehaviour
                 ItemDrop loot = lootHits[i].GetComponent<ItemDrop>();
                 if (loot.itemDrop.itemType == ItemType.HealthPickup)
                 {
-                    if (CharacterStats.singleton.currentHealth + 25 > CharacterStats.singleton.maxHealth)
+                    float healAmount = CharacterStats.singleton.maxHealth * 0.25f;
+                    if (CharacterStats.singleton.currentHealth + healAmount > CharacterStats.singleton.maxHealth)
                         CharacterStats.singleton.currentHealth = CharacterStats.singleton.maxHealth;
                     else
-                        CharacterStats.singleton.currentHealth += 25;
+                        CharacterStats.singleton.currentHealth += healAmount;
                     Destroy(lootHits[i].gameObject);
                     return;
                 }
                 else if (loot.itemDrop.itemType == ItemType.ManaPickup)
                 {
-                    if (CharacterStats.singleton.currentMana+ 25 > CharacterStats.singleton.maxMana)
+                    float manaAmount = CharacterStats.singleton.maxMana * 0.25f;
+                    if (CharacterStats.singleton.currentMana+ manaAmount > CharacterStats.singleton.maxMana)
                         CharacterStats.singleton.currentMana = CharacterStats.singleton.maxMana;
                     else
-                        CharacterStats.singleton.currentMana += 25;
+                        CharacterStats.singleton.currentMana += manaAmount;
                     Destroy(lootHits[i].gameObject);
                     return;
                 }
                 if (canvasParent.transform.Find(loot.itemDrop.itemName)!=null) //selling off duplicate items so no need to handle inventory management
                 {
                     CharacterStats.singleton.gold += (Mathf.Floor(0.7f * loot.itemDrop.value)); //getting 70% of the item's value
-                    Debug.Log("Made " + Mathf.Floor(0.7f * loot.itemDrop.value) + " gold off of selling " + loot.itemDrop.itemName);
+                    //Debug.Log("Made " + Mathf.Floor(0.7f * loot.itemDrop.value) + " gold off of selling " + loot.itemDrop.itemName);
                     UIManager.singleton.characterGold.text = "" + CharacterStats.singleton.gold + "$";
                     GameObject soldEffect = Instantiate(soldEffectPrefab, transform.position, transform.rotation);
                     soldEffect.GetComponent<SoldEffect>().soldText.text = loot.itemDrop.itemName + " Item Sold For " + Mathf.Floor(0.7f * loot.itemDrop.value) + " Gold!";
@@ -137,7 +139,7 @@ public class Inventory : MonoBehaviour
         inventoryItem.name = inventory[inventoryIndex].itemName;
         inventoryItem.transform.Find("ItemImage").GetComponent<Image>().sprite = inventory[inventoryIndex].itemSprite;
         inventoryItem.transform.Find("ItemName").GetComponent<TextMeshProUGUI>().text = inventory[inventoryIndex].itemName;
-        inventoryItem.transform.Find("Value").GetComponent<TextMeshProUGUI>().text = inventory[inventoryIndex].value.ToString();
+        inventoryItem.transform.Find("Value").GetComponent<TextMeshProUGUI>().text = inventory[inventoryIndex].value.ToString() + "$";
         inventoryItem.transform.Find("Rarity").GetComponent<TextMeshProUGUI>().text = inventory[inventoryIndex].rarity.ToString();
 
         inventoryIndex++;

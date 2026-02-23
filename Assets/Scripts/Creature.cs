@@ -26,14 +26,20 @@ public abstract class Creature : MonoBehaviour
     private float attackCD;
     private float attackDamage;
 
+    private Transform lastTarget;
+
     [HideInInspector]public Vector3 startingPosition;
     private bool atStartingPosition = true;
+
+    [Header("Enemy Visual")]
+    private Animator anim;
 
     private void Awake()
     {
         currentHp = maxHp;
         currentDespawnTime = maxDespawnTime;
         startingDetectionType = detectionType;
+        anim = GetComponent<Animator>();
         if (creatureWeapon!=null)
         {
             attackCD = Time.time + (1f / creatureWeapon.stats[(int)Stats.AttackSpeed]);
@@ -159,13 +165,20 @@ public abstract class Creature : MonoBehaviour
                     attackCD = Time.time + (1f / creatureWeapon.stats[(int)Stats.AttackSpeed]);
                     if (creatureWeapon.weaponType == WeaponType.Bow)
                     {
+                        /* transferred to animation event
                         GameObject tempProjectile = Instantiate(creatureWeapon.projectilePrefab, transform.position, transform.rotation, null);
                         tempProjectile.GetComponent<Attacks>().target = target.transform;
                         tempProjectile.GetComponent<Attacks>().damage = attackDamage;
+                        */
+                        lastTarget = target;
+                        anim.SetTrigger("BowAttack");
                     }
                     else if (creatureWeapon.weaponType == WeaponType.Sword)
                     {
-                        CharacterStats.singleton.currentHealth -= attackDamage;
+                        // trying to do this with animation events to coordinate with the attack timing
+                        //CharacterStats.singleton.currentHealth -= attackDamage;
+                        //CharacterStats.singleton.TakeDamage(attackDamage);
+                        anim.SetTrigger("MeleeAttack");
                         //plan b
                         /**
                         if (target.TryGetComponent<CharacterStats>(out CharacterStats heroStats))
@@ -328,6 +341,18 @@ public abstract class Creature : MonoBehaviour
 
         if (currentHp < maxHp && idleHealingTimer>3)
             currentHp += maxHp / 10f * Time.deltaTime;
+    }
+
+    public void DealDamage() //for animation event
+    {
+        CharacterStats.singleton.TakeDamage(attackDamage);
+    }
+
+    public void ShootArrow() //for animation event
+    {
+        GameObject tempProjectile = Instantiate(creatureWeapon.projectilePrefab, transform.position, transform.rotation, null);
+        tempProjectile.GetComponent<Attacks>().target = lastTarget.transform;
+        tempProjectile.GetComponent<Attacks>().damage = attackDamage;
     }
 
     public int ExpCalc(LootDrop enemyRarity)

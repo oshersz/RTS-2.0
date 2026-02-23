@@ -123,6 +123,7 @@ public class UIManager : MonoBehaviour
             {
                 inventoryWindow.gameObject.SetActive(false);
                 HideEquipmentPopup();
+                UpdateCharacterStats();
             }
             else
                 inventoryWindow.gameObject.SetActive(true);

@@ -19,22 +19,32 @@ public class SpawnMonsters : MonoBehaviour
 
     void Update()
     {
-        if (Time.time>spawnTimer)
+        if (Time.time > spawnTimer)
         {
-            int spawnAmount = Random.Range(1, 6);
-            for (int i =0;i<spawnAmount;i++)
-            {
-                if (OneMinus() == 1)
-                    spawnLocation = new Vector3(Random.Range(-transform.localScale.x * 0.75f, transform.localScale.x * 0.75f), 1, Random.Range(transform.localScale.z * 0.5f, transform.localScale.z * 0.75f) * OneMinus());
-                else
-                    spawnLocation = new Vector3(Random.Range(transform.localScale.x * 0.5f, transform.localScale.x * 0.75f) * OneMinus(), 1, Random.Range(-transform.localScale.z * 0.75f, transform.localScale.z * 0.75f));
+            Spawn();
+        }
 
-                if (Random.Range(0,2) == 1)
-                    Instantiate(enemyPrefab, transform.position + spawnLocation, Quaternion.identity,spawnParent);
-                else
-                    Instantiate(enemyPrefab2, transform.position + spawnLocation, Quaternion.identity,spawnParent);
-                spawnTimer = Time.time + spawnCooldown;
-            }
+        if (Input.GetKeyDown(KeyCode.PageUp))
+        {
+            Spawn();
+        }
+    }
+
+    private void Spawn()
+    {
+        int spawnAmount = Random.Range(1, 6);
+        for (int i = 0; i < spawnAmount; i++)
+        {
+            if (OneMinus() == 1)
+                spawnLocation = new Vector3(Random.Range(-transform.localScale.x * 0.75f, transform.localScale.x * 0.75f), 1, Random.Range(transform.localScale.z * 0.5f, transform.localScale.z * 0.75f) * OneMinus());
+            else
+                spawnLocation = new Vector3(Random.Range(transform.localScale.x * 0.5f, transform.localScale.x * 0.75f) * OneMinus(), 1, Random.Range(-transform.localScale.z * 0.75f, transform.localScale.z * 0.75f));
+
+            if (Random.Range(0, 2) == 1)
+                Instantiate(enemyPrefab, transform.position + spawnLocation, Quaternion.identity, spawnParent);
+            else
+                Instantiate(enemyPrefab2, transform.position + spawnLocation, Quaternion.identity, spawnParent);
+            spawnTimer = Time.time + spawnCooldown;
         }
     }
 

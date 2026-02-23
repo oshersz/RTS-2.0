@@ -5,7 +5,7 @@ public class CharacterMovement : MonoBehaviour
 {
     private LayerMask floorMask;
     private CharacterController CC;
-    [Range(0,20)] [SerializeField] float moveSpeed;
+    //[Range(0,20)] [SerializeField] float moveSpeed; //movespeed is taken from character stats instead
     private Vector3 moveDirection;
 
     private float rollValue;
@@ -157,7 +157,7 @@ public class CharacterMovement : MonoBehaviour
 
             desiredRotation = Quaternion.LookRotation(moveDirection.normalized, Vector3.up);
 
-            CC.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
+            CC.Move(moveDirection.normalized * CharacterStats.singleton.characterStats[(int)Stats.MoveSpeed] * Time.deltaTime);
         }
         else if (charState == State.Attacking)
         {
@@ -189,11 +189,11 @@ public class CharacterMovement : MonoBehaviour
             rollValue = easeInCubic(1-rollTimer);
             //rollValue = easeOutCubic(rollTimer);
             //Debug.Log(rollValue);
-            CC.Move(moveDirection.normalized * moveSpeed * rollValue * 10 * Time.deltaTime);
+            CC.Move(moveDirection.normalized * CharacterStats.singleton.characterStats[(int)Stats.MoveSpeed] * rollValue * 10 * Time.deltaTime);
         }
         else if (charState == State.Moving)
         {
-            CC.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
+            CC.Move(moveDirection.normalized * CharacterStats.singleton.characterStats[(int)Stats.MoveSpeed] * Time.deltaTime);
             //CC.Move(transform.forward * moveSpeed * Time.deltaTime);
         }
     }
@@ -212,13 +212,7 @@ public class CharacterMovement : MonoBehaviour
     {
         rollTimer += Time.deltaTime * 3; //roll duration is 1/3 second
         rollValue = easeOutQuint(rollTimer);
-        CC.Move(moveDirection.normalized * moveSpeed * rollValue * 2 * Time.deltaTime);
-    }
-
-    public void UpgradeMovementSpeed()
-    {
-        moveSpeed *= 1.25f;
-        UIManager.singleton.CloseLevelUpWindow();
+        CC.Move(moveDirection.normalized * CharacterStats.singleton.characterStats[(int)Stats.MoveSpeed] * rollValue * 2 * Time.deltaTime);
     }
 
 

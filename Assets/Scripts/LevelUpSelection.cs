@@ -12,15 +12,6 @@ public class LevelUpSelection : MonoBehaviour
         Gold
     }
     public LevelUpOptions levelUpOptions;
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 
     private void OnEnable() //consider transferring the upgrades themselves to here
     {
@@ -34,7 +25,12 @@ public class LevelUpSelection : MonoBehaviour
         }
         else if (levelUpOptions == LevelUpOptions.MoveSpeed) //movespeed is not an instanced float right now
         {
-            upgradeDescription.text = "Upgrades Movement Speed by 25%, from " + "5" + " to " + "6.25";
+            upgradeDescription.text = "Upgrades Movement Speed by 25%, from " + CharacterStats.singleton.characterStats[(int)Stats.MoveSpeed] + " to " + CharacterStats.singleton.characterStats[(int)Stats.MoveSpeed] * 1.25f;
         }
+    }
+
+    public void LevelUp()
+    {
+        CharacterStats.singleton.LevelUpSelect(levelUpOptions);
     }
 }

@@ -26,6 +26,8 @@ public class CharacterStats : MonoBehaviour
     private LayerMask playerHitLayer;
 
 
+    private float defaultMoveSpeed;
+
     /** // option A
     public int statPointsToSpend;
     public int vitality;
@@ -66,6 +68,8 @@ public class CharacterStats : MonoBehaviour
         levelStartingExp = 0;
 
         characterStats = new float[13]; //13 is the number of stats
+        defaultMoveSpeed = 5;
+        characterStats[(int)Stats.MoveSpeed] = defaultMoveSpeed; //starting movespeed
     }
 
     void Start()
@@ -132,9 +136,26 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
-    private void TakeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
+
+        if (damage / maxHealth > 0.1) //%10 of max hp
+        {
+            CameraShaker.singleton.ShakeCamera(Shake.Strong);
+        }
+        else if (damage / maxHealth > 0.05) //%5 of max hp
+        {
+            CameraShaker.singleton.ShakeCamera(Shake.Medium);
+        }
+        else 
+        {
+            CameraShaker.singleton.ShakeCamera(Shake.Weak);
+        }
+
+
+
+
         if (currentHealth<=0)
         {
             Debug.Log("dead");
@@ -161,18 +182,39 @@ public class CharacterStats : MonoBehaviour
         levelUpVFX.Play();
         UIManager.singleton.OpenLevelUpWindow();
     }
-    public void UpgradeHealth()
+
+    public void LevelUpSelect(LevelUpSelection.LevelUpOptions levelUpSelection)
     {
-        maxHealth *= 1.25f;
-        healthRegen = maxHealth / 50f;
+        if (levelUpSelection == LevelUpSelection.LevelUpOptions.Health)
+        {
+            UpgradeHealth();
+        }
+        else if (levelUpSelection == LevelUpSelection.LevelUpOptions.Mana)
+        {
+            UpgradeMana();
+        }
+        else if (levelUpSelection == LevelUpSelection.LevelUpOptions.MoveSpeed)
+        {
+            defaultMoveSpeed *= 2f; //*1.25f
+        }
+        else if (levelUpSelection == LevelUpSelection.LevelUpOptions.Gold)
+        {
+            characterStats[(int)Stats.GoldIncrease] += 25;
+        }
+        UIManager.singleton.UpdateCharacterStats();
         UIManager.singleton.CloseLevelUpWindow();
     }
 
-    public void UpgradeMana()
+    private void UpgradeHealth()
+    {
+        maxHealth *= 1.25f;
+        healthRegen = maxHealth / 50f;
+    }
+
+    private void UpgradeMana()
     {
         maxMana *= 1.35f;
         manaRegen = maxMana / 25f;
-        UIManager.singleton.CloseLevelUpWindow();
     }
 
     public void UpdateStatsGainedFromEquipment(Equipment[] equippedItemsArray)
@@ -192,6 +234,8 @@ public class CharacterStats : MonoBehaviour
                 }
             }
         }
+
+        characterStats[(int)Stats.MoveSpeed] += defaultMoveSpeed; //starting movespeed
         /**
         damageGainedFromEquipment = 0;
         attackSpeedGainedFromEquipment = 0;
