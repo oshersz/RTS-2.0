@@ -1,4 +1,4 @@
-using System;
+
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
@@ -121,16 +121,21 @@ public class CharacterStats : MonoBehaviour
                 if (currentAttack.attackType == Attacks.Attack.Targeted && currentAttack.target == transform) // && targeted
                 {
                     Destroy(hits[i].gameObject);
-                    TakeDamage(currentAttack.damage);
+                    //TakeDamage(currentAttack.damage);
                 }
                 else if (currentAttack.attackType == Attacks.Attack.FirstTarget)
                 {
                     Destroy(hits[i].gameObject);
-                    TakeDamage(currentAttack.damage);
+                    //TakeDamage(currentAttack.damage);
                 }
                 else if (currentAttack.attackType == Attacks.Attack.AreaOfEffect)
                 {
-                    TakeDamage(currentAttack.damage);
+                    //TakeDamage(currentAttack.damage);
+                }
+                if (Random.Range(0,100) > characterStats[(int)Stats.DodgeChance])
+                {
+                    //if you weren't able to dodge
+                    TakeDamage(currentAttack.damage); 
                 }
             }
         }
@@ -195,11 +200,23 @@ public class CharacterStats : MonoBehaviour
         }
         else if (levelUpSelection == LevelUpSelection.LevelUpOptions.MoveSpeed)
         {
-            defaultMoveSpeed *= 2f; //*1.25f
+            //re-calculating movespeed
+            characterStats[(int)Stats.MoveSpeed] -= defaultMoveSpeed;
+            defaultMoveSpeed *= 1.25f; //*1.25f
+            characterStats[(int)Stats.MoveSpeed] += defaultMoveSpeed;
+
         }
         else if (levelUpSelection == LevelUpSelection.LevelUpOptions.Gold)
         {
             characterStats[(int)Stats.GoldIncrease] += 25;
+        }
+        else if (levelUpSelection == LevelUpSelection.LevelUpOptions.Exp)
+        {
+            characterStats[(int)Stats.ExpIncrease] += 20;
+        }
+        else if (levelUpSelection == LevelUpSelection.LevelUpOptions.Dodge)
+        {
+            characterStats[(int)Stats.DodgeChance] += 10;
         }
         UIManager.singleton.UpdateCharacterStats();
         UIManager.singleton.CloseLevelUpWindow();

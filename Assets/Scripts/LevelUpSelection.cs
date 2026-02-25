@@ -9,7 +9,9 @@ public class LevelUpSelection : MonoBehaviour
         Health,
         Mana,
         MoveSpeed,
-        Gold
+        Gold,
+        Exp,
+        Dodge
     }
     public LevelUpOptions levelUpOptions;
 
@@ -23,9 +25,21 @@ public class LevelUpSelection : MonoBehaviour
         {
             upgradeDescription.text = "Upgrades Max Mana by 35%, from " + CharacterStats.singleton.maxMana + " to " + (CharacterStats.singleton.maxMana * 1.35f);
         }
-        else if (levelUpOptions == LevelUpOptions.MoveSpeed) //movespeed is not an instanced float right now
+        else if (levelUpOptions == LevelUpOptions.MoveSpeed)
         {
             upgradeDescription.text = "Upgrades Movement Speed by 25%, from " + CharacterStats.singleton.characterStats[(int)Stats.MoveSpeed] + " to " + CharacterStats.singleton.characterStats[(int)Stats.MoveSpeed] * 1.25f;
+        }
+        else if (levelUpOptions == LevelUpOptions.Gold)
+        {
+            upgradeDescription.text = "Upgrades Gold Gained by 25%, from " + CharacterStats.singleton.characterStats[(int)Stats.GoldIncrease] + " to " + (CharacterStats.singleton.characterStats[(int)Stats.GoldIncrease] +25) + "%";
+        }
+        else if (levelUpOptions == LevelUpOptions.Exp)
+        {
+            upgradeDescription.text = "Upgrades Exp Gained by 20%, from " + CharacterStats.singleton.characterStats[(int)Stats.ExpIncrease] + " to " + (CharacterStats.singleton.characterStats[(int)Stats.ExpIncrease] + 20) + "%";
+        }
+        else if (levelUpOptions == LevelUpOptions.Dodge)
+        {
+            upgradeDescription.text = "Upgrades Dodge Chance by 10%, from " + CharacterStats.singleton.characterStats[(int)Stats.DodgeChance] + " to " + (CharacterStats.singleton.characterStats[(int)Stats.DodgeChance] + 10) + "%";
         }
     }
 

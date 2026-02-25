@@ -345,7 +345,12 @@ public abstract class Creature : MonoBehaviour
 
     public void DealDamage() //for animation event
     {
-        CharacterStats.singleton.TakeDamage(attackDamage);
+        if (Random.Range(0, 100) > CharacterStats.singleton.characterStats[(int)Stats.DodgeChance])
+        {
+            //if you weren't able to dodge
+            CharacterStats.singleton.TakeDamage(attackDamage);
+        }
+        
     }
 
     public void ShootArrow() //for animation event
@@ -359,13 +364,13 @@ public abstract class Creature : MonoBehaviour
     {
         int expValue = 0;
         if (enemyRarity == LootDrop.Common)
-            expValue = CharacterStats.singleton.level;
+            expValue = CharacterStats.singleton.level * (int)(1+(CharacterStats.singleton.characterStats[(int)Stats.ExpIncrease]/100));
         else if (enemyRarity == LootDrop.Rare)
-            expValue = (int)(CharacterStats.singleton.level * 3 * Mathf.Pow(1.04f, CharacterStats.singleton.level));
+            expValue = (int)(CharacterStats.singleton.level * 3 * (1+(CharacterStats.singleton.characterStats[(int)Stats.ExpIncrease] / 100)) *  Mathf.Pow(1.04f, CharacterStats.singleton.level));
         else if (enemyRarity == LootDrop.Scarce)
-            expValue = (int)(CharacterStats.singleton.level * 7 * Mathf.Pow(1.06f, CharacterStats.singleton.level));
+            expValue = (int)(CharacterStats.singleton.level * 7 * (1+(CharacterStats.singleton.characterStats[(int)Stats.ExpIncrease] / 100)) * Mathf.Pow(1.06f, CharacterStats.singleton.level));
         else if (enemyRarity == LootDrop.Nonexistent)
-            expValue = (int)(CharacterStats.singleton.level * 20 * Mathf.Pow(1.1f, CharacterStats.singleton.level));
+            expValue = (int)(CharacterStats.singleton.level * 20 * (1+(CharacterStats.singleton.characterStats[(int)Stats.ExpIncrease] / 100)) * Mathf.Pow(1.1f, CharacterStats.singleton.level));
         else
             Debug.Log(transform.name + " error with enemy drop type, please fix");
 

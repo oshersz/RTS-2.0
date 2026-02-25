@@ -82,7 +82,7 @@ public class Inventory : MonoBehaviour
                 Match match = Regex.Match(lootHits[i].transform.name, @"\d+"); //check if the loot's name contains numbers
                 if (match.Success)
                 {
-                    CharacterStats.singleton.gold += int.Parse(match.Value);
+                    CharacterStats.singleton.gold += (int)(int.Parse(match.Value) * (1+(CharacterStats.singleton.characterStats[(int)Stats.GoldIncrease] / 100)));
                     UIManager.singleton.characterGold.text = "" + CharacterStats.singleton.gold + "$";
                     Destroy(lootHits[i].gameObject);
                     return;

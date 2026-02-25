@@ -19,7 +19,7 @@ MonoBehaviour:
   owned: 1
   itemName: 3
   value: 2
-  equipped: 1
+  equipped: 0
   equipmentType: 3
   weaponType: 0
   weaponRangeType: 0
@@ -35,6 +35,6 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 7
+  - 50
   - 0
   - 0

@@ -16,10 +16,10 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 76fe3b219e51e444fa148f6cdf1e4685, type: 3}
   itemType: 5
   rarity: 0
-  owned: 0
+  owned: 1
   itemName: 2
   value: 2
-  equipped: 1
+  equipped: 0
   equipmentType: 5
   weaponType: 0
   weaponRangeType: 0
