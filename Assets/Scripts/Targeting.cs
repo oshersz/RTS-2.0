@@ -26,12 +26,6 @@ public class Targeting : MonoBehaviour
 
     private Animator charAnim;
 
-    [Header("Visual Effects")]
-
-    [SerializeField] ParticleSystem moveEffect;
-    [SerializeField] GameObject directionalTargetingIndicator;
-    [SerializeField] GameObject aerialTargetingIndicator;
-    [SerializeField] GameObject radiusTargetingIndicator;
     [SerializeField] GameObject[] spells;
     private float[] spellsCooldown;
     private Spells activeSpell;
@@ -94,11 +88,7 @@ public class Targeting : MonoBehaviour
 
                 //lastTargetedEnemy = targetedEnemy;
 
-                ParticleSystem moveEffectTemp = Instantiate(moveEffect, new Vector3(raycastHit.point.x, moveEffect.transform.position.y, raycastHit.point.z), moveEffect.transform.rotation);
-                moveEffectTemp.transform.localScale *= 1.5f;
-                //moveEffectTemp.startColor = Color.red;
-                ParticleSystem.MainModule moveEffectProperties =  moveEffectTemp.main;
-                moveEffectProperties.startColor = Color.red;
+                CharacterVisual.singleton.MoveVFX(new Vector3(raycastHit.point.x, 0.25f, raycastHit.point.z), 1.5f, Color.red);
 
                 if (characterWeaponRange == WeaponRangeType.Ranged)
                 {
@@ -119,9 +109,7 @@ public class Targeting : MonoBehaviour
                 targetedEnemy = raycastHit.transform.GetComponent<Enemy>();
                 UIManager.singleton.CurrentEnemy(targetedEnemy);
 
-                ParticleSystem moveEffectTemp = Instantiate(moveEffect, new Vector3(raycastHit.point.x, moveEffect.transform.position.y, raycastHit.point.z), moveEffect.transform.rotation);
-                ParticleSystem.MainModule moveEffectProperties = moveEffectTemp.main;
-                moveEffectProperties.startColor = Color.blue;
+                CharacterVisual.singleton.MoveVFX(new Vector3(raycastHit.point.x, 0.25f, raycastHit.point.z), 1, Color.blue);
             }
             else
             {
@@ -144,27 +132,21 @@ public class Targeting : MonoBehaviour
             }
             if (Physics.Raycast(raycastFromMouse, out raycastHit, 500, floorMask) && activeSpellIndex>=0)
             {
-                directionalTargetingIndicator.SetActive(false);
-                aerialTargetingIndicator.SetActive(false);
-                radiusTargetingIndicator.SetActive(false);
+                CharacterVisual.singleton.TurnOffIndicators();
 
                 //Debug.Log(Vector3.Distance(raycastHit.point, transform.position));
+
+                Vector3 spellDirection = new Vector3(raycastHit.point.x - transform.position.x,0,raycastHit.point.z-transform.position.z); // making sure we don't get rotation on the X axis
+                spellDirection.Normalize();
 
                 if ((Vector3.Distance(raycastHit.point, transform.position)*2) > activeSpell.spellRadius)
                 {
                     //return;
                     // think about how to implement that it cast the spell at max range
-
-                    Vector3 spellDirection = raycastHit.point - transform.position;
-                    spellDirection.Normalize();
                     raycastHit.point = transform.position + spellDirection * (activeSpell.spellRadius / 2f);
                 }
 
-                ParticleSystem moveEffectTemp = Instantiate(moveEffect, new Vector3(raycastHit.point.x, moveEffect.transform.position.y, raycastHit.point.z), moveEffect.transform.rotation);
-                moveEffectTemp.transform.localScale *= 1.5f;
-                //moveEffectTemp.startColor = Color.red;
-                ParticleSystem.MainModule moveEffectProperties = moveEffectTemp.main;
-                moveEffectProperties.startColor = Color.red;
+                CharacterVisual.singleton.MoveVFX(new Vector3(raycastHit.point.x, 0.25f, raycastHit.point.z), 1.5f, Color.red);
 
                 //if spell is AOE/first hit spell do something
 
@@ -177,7 +159,7 @@ public class Targeting : MonoBehaviour
 
                 if (activeSpell.spellType == Spells.Spell.FirstTarget)
                 {
-                    GameObject tempSkillShotSpell = Instantiate(spells[activeSpellIndex], new Vector3(transform.position.x, spells[activeSpellIndex].transform.position.y, transform.position.z), directionalTargetingIndicator.transform.rotation);
+                    GameObject tempSkillShotSpell = Instantiate(spells[activeSpellIndex], new Vector3(transform.position.x, spells[activeSpellIndex].transform.position.y, transform.position.z),Quaternion.LookRotation(spellDirection)); //directionalTargetingIndicator.transform.rotation
                 }
 
                 if (activeSpell.spellType == Spells.Spell.Positional)
@@ -317,9 +299,7 @@ public class Targeting : MonoBehaviour
             if (activeSpellIndex>=0)
             {
                 activeSpellIndex = -1;
-                directionalTargetingIndicator.SetActive(false);
-                aerialTargetingIndicator.SetActive(false);
-                radiusTargetingIndicator.SetActive(false);
+                CharacterVisual.singleton.TurnOffIndicators();
                 return;
             }
 
@@ -350,20 +330,16 @@ public class Targeting : MonoBehaviour
 
             activeSpell = spells[activeSpellIndex].GetComponent<Spells>();
 
-            directionalTargetingIndicator.SetActive(false);
-            aerialTargetingIndicator.SetActive(false);
-
-            radiusTargetingIndicator.SetActive(true);
-            radiusTargetingIndicator.transform.localScale = new Vector3(activeSpell.spellRadius,1, activeSpell.spellRadius);
-
+            CharacterVisual.singleton.TurnOffIndicators();
+            CharacterVisual.singleton.SetIndicator(RangeIndicatorType.characterStatic, new Vector3(activeSpell.spellRadius, 1, activeSpell.spellRadius), true);
 
             if (activeSpell.spellType == Spells.Spell.FirstTarget)
             {
-                directionalTargetingIndicator.SetActive(true);
+                CharacterVisual.singleton.SetIndicator(RangeIndicatorType.characterDirectional,Vector3.one,true);
             }
             else if (activeSpell.spellType == Spells.Spell.Positional)
             {
-                aerialTargetingIndicator.SetActive(true);
+                CharacterVisual.singleton.SetIndicator(RangeIndicatorType.worldPos, Vector3.one, true);
             }
 
         }

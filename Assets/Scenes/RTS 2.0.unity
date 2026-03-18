@@ -49722,6 +49722,7 @@ GameObject:
   - component: {fileID: 1632680592}
   - component: {fileID: 1632680594}
   - component: {fileID: 1632680597}
+  - component: {fileID: 1632680598}
   - component: {fileID: 1632680593}
   - component: {fileID: 1632680595}
   m_Layer: 6
@@ -49761,7 +49762,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32cffebf560ec84fbd559e058a663bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveEffect: {fileID: 403350256382460337, guid: 69d89671fa4a8ec498de821dc7c1aca7, type: 3}
   inspectorState: 0
 --- !u!143 &1632680593
 CharacterController:
@@ -49807,10 +49807,6 @@ MonoBehaviour:
   equippedWeaponsGFX:
   - {fileID: 406094827}
   - {fileID: 1840237114}
-  moveEffect: {fileID: 403350256382460337, guid: 69d89671fa4a8ec498de821dc7c1aca7, type: 3}
-  directionalTargetingIndicator: {fileID: 1369146958}
-  aerialTargetingIndicator: {fileID: 2097246977}
-  radiusTargetingIndicator: {fileID: 1528358844}
   spells:
   - {fileID: 5047552725680048366, guid: aa7b46723504b4f429881178ef046632, type: 3}
   - {fileID: 5047552725680048366, guid: 0a7981e0b1ca98b4c9972b99dcae1d3f, type: 3}
@@ -49875,6 +49871,40 @@ MonoBehaviour:
   ItemUIPrefab: {fileID: 4539345161926625403, guid: c058d6cd328a38f448d8d2a071553b74, type: 3}
   canvasParent: {fileID: 573543374}
   soldEffectPrefab: {fileID: 6535240679285285921, guid: 8af678fe073e5e84a9b2f20eb6b7d004, type: 3}
+--- !u!114 &1632680598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632680590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecb391641f9e9cf48bc60a76e49a2580, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyGFX: {fileID: 1520729109}
+  bodyMeshes:
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  helmetGFX: {fileID: 1468789705}
+  helmetMeshes:
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  weaponGFX: {fileID: 1474199666}
+  weaponMeshes:
+  - {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  moveEffect: {fileID: 403350256382460337, guid: 69d89671fa4a8ec498de821dc7c1aca7, type: 3}
+  directionalTargetingIndicator: {fileID: 1369146959}
+  aerialTargetingIndicator: {fileID: 2097246979}
+  radiusTargetingIndicator: {fileID: 1528358846}
 --- !u!1 &1641772303
 GameObject:
   m_ObjectHideFlags: 0

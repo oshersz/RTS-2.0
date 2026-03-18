@@ -13,8 +13,6 @@ public class CharacterMovement : MonoBehaviour
     private float rollCD;
     private bool rolling;
 
-    [SerializeField] ParticleSystem moveEffect;
-
     private Ray raycastFromMouse;
     private RaycastHit raycastHit;
 
@@ -73,7 +71,7 @@ public class CharacterMovement : MonoBehaviour
             }
             raycastHit.point = new Vector3(raycastHit.point.x, transform.position.y, raycastHit.point.z); //preventing the char from unwanted rotation;
 
-            Instantiate(moveEffect, new Vector3(raycastHit.point.x, moveEffect.transform.position.y, raycastHit.point.z), moveEffect.transform.rotation);
+            CharacterVisual.singleton.MoveVFX(new Vector3(raycastHit.point.x, 0.25f, raycastHit.point.z));
 
             moveDirection = raycastHit.point - transform.position;
 

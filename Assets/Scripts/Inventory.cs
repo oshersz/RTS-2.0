@@ -198,7 +198,7 @@ public class Inventory : MonoBehaviour
         {
             characterTargeting.EquipNewWeapon(equipmentToEquip);
         }
-
+        CharacterVisual.singleton.VisualizeEquipment(1,equipmentToEquip.rarity);
         CharacterStats.singleton.UpdateStatsGainedFromEquipment(equippedItems);
 
         /**

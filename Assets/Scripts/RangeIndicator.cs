@@ -1,5 +1,12 @@
 using UnityEngine;
 
+
+public enum RangeIndicatorType
+{
+    characterDirectional,
+    characterStatic,
+    worldPos
+}
 public class RangeIndicator : MonoBehaviour
 {
     [SerializeField] GameObject character;
@@ -9,12 +16,6 @@ public class RangeIndicator : MonoBehaviour
     private Ray raycastFromMouse;
     private RaycastHit raycastHit;
 
-    private enum RangeIndicatorType
-    {
-        characterDirectional,
-        characterStatic,
-        worldPos
-    }
     void Start()
     {
         
