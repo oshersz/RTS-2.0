@@ -39,15 +39,18 @@ public class LootManager : MonoBehaviour
     {
         Vector3 desiredLootPosition = new Vector3(creaturePosition.x, 0, creaturePosition.z);
 
+        float chanceInc = CharacterStats.singleton.characterStats[(int)Stats.LootChanceIncrease];
+
         if (lootDrop == LootDrop.Common)
         {
             moneyAmount = Random.Range(0, 10);
+
 
             if (Random.Range(0,100)<70) //high chance for a common drop
             {
                 Instantiate(commonItems[Random.Range(0,commonItems.Length)], desiredLootPosition, transform.rotation, null); 
             }
-            if (Random.Range(0, 100) < 30) //lower chance of a rare drop
+            if (Random.Range(0, 100) < 30 + chanceInc) //lower chance of a rare drop
             {
                 Instantiate(rareItems[Random.Range(0, rareItems.Length )], desiredLootPosition, transform.rotation, null); // commonItems.Length-1?
             }
@@ -57,7 +60,7 @@ public class LootManager : MonoBehaviour
         {
             moneyAmount = Random.Range(10, 25);
 
-            if (Random.Range(0, 100) < 55) //high chance for a rare drop
+            if (Random.Range(0, 100) < 55 + chanceInc) //high chance for a rare drop
             {
                 Instantiate(rareItems[Random.Range(0, rareItems.Length)], desiredLootPosition, transform.rotation, null);
             }
@@ -75,7 +78,7 @@ public class LootManager : MonoBehaviour
         {
             moneyAmount = Random.Range(50, 150);
 
-            if (Random.Range(0, 100) < 35) //reasonable chance for a scarce drop
+            if (Random.Range(0, 100) < 35 + chanceInc/2) //reasonable chance for a scarce drop
             {
                 Instantiate(scarceItems[Random.Range(0, scarceItems.Length)], desiredLootPosition, transform.rotation, null);
             }
@@ -83,7 +86,7 @@ public class LootManager : MonoBehaviour
             {
                 Instantiate(rareItems[Random.Range(0, rareItems.Length)], desiredLootPosition, transform.rotation, null);
             }
-            if (Random.Range(0, 100) < 25)
+            if (Random.Range(0, 100) < 25 + chanceInc)
             {
                 Instantiate(rareItems[Random.Range(0, rareItems.Length)], desiredLootPosition, transform.rotation, null);
             }
@@ -93,11 +96,15 @@ public class LootManager : MonoBehaviour
         {
             moneyAmount = Random.Range(500, 2000);
 
-            if (Random.Range(0, 100) < 60) //high  chance for a scarce drop
+            if (Random.Range(0, 100) < 15 + chanceInc / 4) //high  chance for a scarce drop
+            {
+                Instantiate(nonexistentItems[Random.Range(0, nonexistentItems.Length)], desiredLootPosition, transform.rotation, null);
+            }
+            if (Random.Range(0, 100) < 60 + chanceInc/2) //high  chance for a scarce drop
             {
                 Instantiate(scarceItems[Random.Range(0, scarceItems.Length)], desiredLootPosition, transform.rotation, null);
             }
-            if (Random.Range(0, 100) < 20) //small  chance for an additional scarce drop
+            if (Random.Range(0, 100) < 20 + chanceInc/2) //small  chance for an additional scarce drop
             {
                 Instantiate(scarceItems[Random.Range(0, scarceItems.Length)], desiredLootPosition, transform.rotation, null);
             }
@@ -106,7 +113,7 @@ public class LootManager : MonoBehaviour
                 Instantiate(rareItems[Random.Range(0, rareItems.Length)], desiredLootPosition, transform.rotation, null);
                 Instantiate(rareItems[Random.Range(0, rareItems.Length)], desiredLootPosition, transform.rotation, null);
             }
-            if (Random.Range(0, 100) < 40)
+            if (Random.Range(0, 100) < 40 + chanceInc)
             {
                 Instantiate(rareItems[Random.Range(0, rareItems.Length)], desiredLootPosition, transform.rotation, null);
             }

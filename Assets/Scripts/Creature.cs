@@ -348,7 +348,7 @@ public abstract class Creature : MonoBehaviour
         if (Random.Range(0, 100) > CharacterStats.singleton.characterStats[(int)Stats.DodgeChance])
         {
             //if you weren't able to dodge
-            CharacterStats.singleton.TakeDamage(attackDamage);
+            CharacterStats.singleton.TakeDamage(attackDamage, DamageType.MeleePhysical);
         }
         
     }

@@ -77,7 +77,7 @@ MonoBehaviour:
   spellRadius: 30
   manaCost: 10
   flySpeed: 15
-  destroyAfter: 2
+  destroyAfter: 1
 --- !u!1 &6697254816745325533
 GameObject:
   m_ObjectHideFlags: 0

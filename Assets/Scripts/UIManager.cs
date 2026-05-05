@@ -236,6 +236,24 @@ public class UIManager : MonoBehaviour
         }
         //reserved for the equipment name
         equipmentPopupStats[13].text = equipmentToShow.itemName;
+        //changing the name color based on the rarity of the item - common = grey, rare = blue, scarce = purple, nonexistent = orange
+        // the colors I wanted doesn't exist in the preset colors
+        if (equipmentToShow.rarity == LootDrop.Common)
+        {
+            equipmentPopupStats[13].color = Color.grey;
+        }
+        else if (equipmentToShow.rarity == LootDrop.Rare)
+        {
+            equipmentPopupStats[13].color = Color.green;
+        }
+        else if (equipmentToShow.rarity == LootDrop.Scarce)
+        {
+            equipmentPopupStats[13].color = Color.cyan;
+        }
+        else if (equipmentToShow.rarity == LootDrop.Nonexistent)
+        {
+            equipmentPopupStats[13].color = Color.red;
+        }
     }
 
     public void HideEquipmentPopup()

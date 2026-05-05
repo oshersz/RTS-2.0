@@ -87,6 +87,11 @@ public class CharacterStats : MonoBehaviour
         HealthManaRegen();
         if (!dead)
             DamageScan();
+
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            GetExp(5);
+        }
     }
 
     private void HealthManaRegen()
@@ -118,32 +123,46 @@ public class CharacterStats : MonoBehaviour
 
                 //second if might be redundant
 
-                if (currentAttack.attackType == Attacks.Attack.Targeted && currentAttack.target == transform) // && targeted
+                if (currentAttack.attackType == Attack.Targeted && currentAttack.target == transform) // && targeted
                 {
                     Destroy(hits[i].gameObject);
                     //TakeDamage(currentAttack.damage);
                 }
-                else if (currentAttack.attackType == Attacks.Attack.FirstTarget)
+                else if (currentAttack.attackType == Attack.FirstTarget)
                 {
                     Destroy(hits[i].gameObject);
                     //TakeDamage(currentAttack.damage);
                 }
-                else if (currentAttack.attackType == Attacks.Attack.AreaOfEffect)
+                else if (currentAttack.attackType == Attack.AreaOfEffect)
                 {
                     //TakeDamage(currentAttack.damage);
                 }
                 if (Random.Range(0,100) > characterStats[(int)Stats.DodgeChance])
                 {
                     //if you weren't able to dodge
-                    TakeDamage(currentAttack.damage); 
+                    TakeDamage(currentAttack.damage,DamageType.RangedPhysical); 
                 }
             }
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, DamageType damageType)
     {
-        currentHealth -= damage;
+        if (damageType == DamageType.MeleePhysical)
+        {
+            currentHealth -= Mathf.Max(0,damage - characterStats[(int)Stats.PhysicalDefense]);
+        }
+        else if (damageType == DamageType.RangedPhysical)
+        {
+            currentHealth -= Mathf.Max(0, (int)(damage - (characterStats[(int)Stats.PhysicalDefense/3])));
+        }
+        else
+        {
+            currentHealth -= Mathf.Max(0, damage - characterStats[(int)Stats.MagicalDefense]);
+        }
+        
+
+
 
         if (damage / maxHealth > 0.1) //%10 of max hp
         {
@@ -188,35 +207,50 @@ public class CharacterStats : MonoBehaviour
         UIManager.singleton.OpenLevelUpWindow();
     }
 
-    public void LevelUpSelect(LevelUpSelection.LevelUpOptions levelUpSelection)
+    public void LevelUpSelect(LevelUpOptions levelUpSelection)
     {
-        if (levelUpSelection == LevelUpSelection.LevelUpOptions.Health)
+        if (levelUpSelection == LevelUpOptions.Health)
         {
             UpgradeHealth();
         }
-        else if (levelUpSelection == LevelUpSelection.LevelUpOptions.Mana)
+        else if (levelUpSelection == LevelUpOptions.Mana)
         {
             UpgradeMana();
         }
-        else if (levelUpSelection == LevelUpSelection.LevelUpOptions.MoveSpeed)
+        else if (levelUpSelection == LevelUpOptions.PhysicalDefense)
+        {
+            characterStats[(int)Stats.PhysicalDefense] += 1;
+        }
+        else if (levelUpSelection == LevelUpOptions.MagicalDefense)
+        {
+            characterStats[(int)Stats.MagicalDefense] += 2;
+        }
+        else if (levelUpSelection == LevelUpOptions.MoveSpeed)
         {
             //re-calculating movespeed
             characterStats[(int)Stats.MoveSpeed] -= defaultMoveSpeed;
             defaultMoveSpeed *= 1.25f; //*1.25f
             characterStats[(int)Stats.MoveSpeed] += defaultMoveSpeed;
-
         }
-        else if (levelUpSelection == LevelUpSelection.LevelUpOptions.Gold)
+        else if (levelUpSelection == LevelUpOptions.Dodge)
+        {
+            characterStats[(int)Stats.DodgeChance] += 10;
+        }
+        else if (levelUpSelection == LevelUpOptions.Gold)
         {
             characterStats[(int)Stats.GoldIncrease] += 25;
         }
-        else if (levelUpSelection == LevelUpSelection.LevelUpOptions.Exp)
+        else if (levelUpSelection == LevelUpOptions.Exp)
         {
             characterStats[(int)Stats.ExpIncrease] += 20;
         }
-        else if (levelUpSelection == LevelUpSelection.LevelUpOptions.Dodge)
+        else if (levelUpSelection == LevelUpOptions.LootChanceIncrease)
         {
-            characterStats[(int)Stats.DodgeChance] += 10;
+            characterStats[(int)Stats.LootChanceIncrease] += 10;
+        }
+        else if (levelUpSelection == LevelUpOptions.SpellDamage)
+        {
+            characterStats[(int)Stats.SpellDamage] += 15;
         }
         UIManager.singleton.UpdateCharacterStats();
         UIManager.singleton.CloseLevelUpWindow();

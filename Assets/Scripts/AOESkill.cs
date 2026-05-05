@@ -15,7 +15,7 @@ public class AOESkill : Spells
 
         timeAfterActive += timeBeforeActive + Time.time;
         timeBeforeActive += Time.time;
-        attackType = Attacks.Attack.AreaOfEffect;
+        attackType = Attack.AreaOfEffect;
     }
 
     void Update()

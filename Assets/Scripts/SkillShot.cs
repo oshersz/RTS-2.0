@@ -7,7 +7,7 @@ public class SkillShot : Spells
     [SerializeField] float destroyAfter;
     void Start()
     {
-        attackType = Attacks.Attack.FirstTarget;
+        attackType = Attack.FirstTarget;
         Destroy(gameObject, destroyAfter);
     }
 

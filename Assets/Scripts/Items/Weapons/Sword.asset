@@ -19,7 +19,7 @@ MonoBehaviour:
   owned: 0
   itemName: Starting Weapon
   value: 1
-  equipped: 1
+  equipped: 0
   equipmentType: 0
   weaponType: 0
   weaponRangeType: 0

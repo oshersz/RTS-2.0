@@ -134,15 +134,11 @@ public class Targeting : MonoBehaviour
             {
                 CharacterVisual.singleton.TurnOffIndicators();
 
-                //Debug.Log(Vector3.Distance(raycastHit.point, transform.position));
-
                 Vector3 spellDirection = new Vector3(raycastHit.point.x - transform.position.x,0,raycastHit.point.z-transform.position.z); // making sure we don't get rotation on the X axis
                 spellDirection.Normalize();
 
                 if ((Vector3.Distance(raycastHit.point, transform.position)*2) > activeSpell.spellRadius)
                 {
-                    //return;
-                    // think about how to implement that it cast the spell at max range
                     raycastHit.point = transform.position + spellDirection * (activeSpell.spellRadius / 2f);
                 }
 
@@ -160,11 +156,13 @@ public class Targeting : MonoBehaviour
                 if (activeSpell.spellType == Spells.Spell.FirstTarget)
                 {
                     GameObject tempSkillShotSpell = Instantiate(spells[activeSpellIndex], new Vector3(transform.position.x, spells[activeSpellIndex].transform.position.y, transform.position.z),Quaternion.LookRotation(spellDirection)); //directionalTargetingIndicator.transform.rotation
+                    tempSkillShotSpell.GetComponent<Spells>().damage *= (1 + CharacterStats.singleton.characterStats[(int)Stats.SpellDamage]); //consider changing
                 }
 
                 if (activeSpell.spellType == Spells.Spell.Positional)
                 {
                     GameObject tempAOESpell = Instantiate(spells[activeSpellIndex], new Vector3(raycastHit.point.x, spells[activeSpellIndex].transform.position.y, raycastHit.point.z), transform.rotation); // AOE spell
+                    tempAOESpell.GetComponent<Spells>().damage *= (1 + CharacterStats.singleton.characterStats[(int)Stats.SpellDamage]); //consider changing
                 }
 
                 if (activeSpell.spellType == Spells.Spell.SelfTarget) //&& CharacterMovement.charState != State.AttackStun

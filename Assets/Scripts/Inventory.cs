@@ -198,7 +198,18 @@ public class Inventory : MonoBehaviour
         {
             characterTargeting.EquipNewWeapon(equipmentToEquip);
         }
-        CharacterVisual.singleton.VisualizeEquipment(1,equipmentToEquip.rarity);
+        if (equipmentToEquip.equipmentType == EquipmentType.Helmet)
+        {
+            CharacterVisual.singleton.VisualizeEquipment(0,equipmentToEquip.rarity);
+        }
+        if (equipmentToEquip.equipmentType == EquipmentType.Chestplate)
+        {
+            CharacterVisual.singleton.VisualizeEquipment(1, equipmentToEquip.rarity);
+        }
+        if (equipmentToEquip.equipmentType == EquipmentType.Weapon)
+        {
+            CharacterVisual.singleton.VisualizeEquipment(2, equipmentToEquip.rarity);
+        }
         CharacterStats.singleton.UpdateStatsGainedFromEquipment(equippedItems);
 
         /**
