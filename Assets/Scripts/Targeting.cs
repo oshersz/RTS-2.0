@@ -90,24 +90,29 @@ public class Targeting : MonoBehaviour
 
                 CharacterVisual.singleton.MoveVFX(new Vector3(raycastHit.point.x, 0.25f, raycastHit.point.z), 1.5f, Color.red);
 
-                if (characterWeaponRange == WeaponRangeType.Ranged)
-                {
-                    CM.FollowTarget(targetedEnemy.transform, attackRange);
-                    //EquippedWeapon.target = targetedEnemy.transform;
-                }
-                else if (characterWeaponRange == WeaponRangeType.Melee)
-                {
-                    CM.FollowTarget(targetedEnemy.transform, attackRange);
-                    //EquippedWeapon.target = targetedEnemy.transform;
-                }
-                //if spell is targeted spell do something
+                CM.FollowTarget(targetedEnemy.transform, attackRange);
+
             }
             else if (Physics.Raycast(raycastFromMouse, out raycastHit, 500, interactableLayer)) // checking if clicked on NPC
             {
-                raycastHit.transform.GetComponent<Interactable>().Interact();
+                //raycastHit.transform.GetComponent<Interactable>().Interact();
 
-                targetedEnemy = raycastHit.transform.GetComponent<Enemy>();
-                UIManager.singleton.CurrentEnemy(targetedEnemy);
+                if (Vector3.Distance(transform.position,raycastHit.transform.position)<3)
+                {
+                    raycastHit.transform.GetComponent<Interactable>().Interact();
+                }
+
+                CM.FollowTarget(raycastHit.transform, 2, raycastHit.transform.GetComponent<Interactable>());
+
+                if (raycastHit.transform.TryGetComponent(out targetedEnemy))
+                {
+                    if (targetedEnemy != null)
+                    {
+                        targetedEnemy = raycastHit.transform.GetComponent<Enemy>();
+                        UIManager.singleton.CurrentEnemy(targetedEnemy);
+                        //CM.FollowTarget(targetedEnemy.transform, 2);
+                    }
+                }
 
                 CharacterVisual.singleton.MoveVFX(new Vector3(raycastHit.point.x, 0.25f, raycastHit.point.z), 1, Color.blue);
             }
@@ -115,19 +120,18 @@ public class Targeting : MonoBehaviour
             {
                 if (activeSpellIndex == -1)
                 {
+                    if (targetedEnemy!=null)
+                    {
+                        CM.FollowTarget(transform, attackRange);
+                    }
+                    else
+                    {
+                        CM.FollowTarget(null, attackRange);
+                    }
                     targetedEnemy = null;
                     UIManager.singleton.CurrentEnemy(targetedEnemy);
 
-                    if (characterWeaponRange == WeaponRangeType.Ranged)
-                    {
-                        CM.FollowTarget(null, attackRange);
-                        //EquippedWeapon.target = null;
-                    }
-                    else if (characterWeaponRange == WeaponRangeType.Melee)
-                    {
-                        CM.FollowTarget(null, attackRange);
-                        //EquippedWeapon.target = null;
-                    }
+                    
                 }
             }
             if (Physics.Raycast(raycastFromMouse, out raycastHit, 500, floorMask) && activeSpellIndex>=0)
@@ -183,6 +187,10 @@ public class Targeting : MonoBehaviour
 
     private void Attack()
     {
+        //consider changing
+        if (targetedEnemy == null)
+            return;
+
         if (CharacterMovement.charState == State.Attacking && Time.time > attackCD) //starting attack sequence
         {
             attackDelay = Time.time + ((1f / attackSpeed) / 10f);

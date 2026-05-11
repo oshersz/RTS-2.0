@@ -21,6 +21,8 @@ public class CharacterMovement : MonoBehaviour
     private bool following = false;
     private float attackRange;
 
+    private Interactable lastInteractable;
+
     private float rotationSpeed = 700;
 
     private Quaternion desiredRotation;
@@ -28,6 +30,8 @@ public class CharacterMovement : MonoBehaviour
     public static State charState;
 
     public State inspectorState;
+
+    public Vector3 raycasthitpoint;
 
     struct Equipment
     {
@@ -43,6 +47,7 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
+        raycasthitpoint = raycastHit.point;
         /*
         Debug.Log(charState.ToString());
 
@@ -63,8 +68,27 @@ public class CharacterMovement : MonoBehaviour
 
     private void Move()
     {
+        if (Input.GetMouseButton(1)) //movement with right mouse click
+        {
+            raycastFromMouse = Camera.main.ScreenPointToRay(Input.mousePosition); //because it's a raycast, it hits invisble colliders
+            if (Physics.Raycast(raycastFromMouse, out raycastHit, 500, floorMask))
+            {
+            }
+            raycastHit.point = new Vector3(raycastHit.point.x, transform.position.y, raycastHit.point.z); //preventing the char from unwanted rotation;
+
+            moveDirection = raycastHit.point - transform.position;
+
+            if (charState != State.AttackStun)
+                desiredRotation = Quaternion.LookRotation(moveDirection.normalized, Vector3.up);
+
+            // unfollow
+            following = false;
+            followTarget = null;
+
+        }
         if (Input.GetMouseButtonDown(1)) //movement with right mouse click
         {
+            /**
             raycastFromMouse = Camera.main.ScreenPointToRay(Input.mousePosition); //because it's a raycast, it hits invisble colliders
             if (Physics.Raycast(raycastFromMouse, out raycastHit, 500, floorMask))
             {
@@ -81,6 +105,8 @@ public class CharacterMovement : MonoBehaviour
             // unfollow
             following = false;
             followTarget = null;
+            */
+            CharacterVisual.singleton.MoveVFX(new Vector3(raycastHit.point.x, 0.25f, raycastHit.point.z));
 
         }
         transform.rotation = Quaternion.RotateTowards(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
@@ -105,6 +131,11 @@ public class CharacterMovement : MonoBehaviour
             }
             else if (following && Vector3.Distance(transform.position, followTargetPosition) < attackRange)
             {
+                if (lastInteractable!= null)
+                {
+                    lastInteractable.Interact();
+                    lastInteractable = null;
+                }
                 charState = State.Attacking;
                 Action();
             }
@@ -124,6 +155,7 @@ public class CharacterMovement : MonoBehaviour
 
     public void FollowTarget(Transform target, float attackRange)
     {
+        lastInteractable = null;
         if (target != null)
         {
 
@@ -140,9 +172,26 @@ public class CharacterMovement : MonoBehaviour
         {
             following = false;
             followTarget = null;
-            //raycastHit.point = transform.position; //consider changing;
+
+            if (Vector3.Distance(transform.position, raycastHit.point) < 1)
+            {
+                //charState = State.Idle;
+                raycastHit.point = transform.position; //consider changing;
+            }
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
         }
+    }
+
+    public void FollowTarget(Transform target, float attackRange,Interactable interactable)
+    {
+        lastInteractable = interactable;
+        following = true;
+        followTarget = target;
+        followTargetPosition = new Vector3(target.position.x, transform.position.y, target.position.z); //preventing the char from unwanted rotation;
+
+        this.attackRange = attackRange;
+        charState = State.Chasing;
+        Action();
     }
 
     private void Action()

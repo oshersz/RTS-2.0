@@ -82,7 +82,11 @@ public class UIManager : MonoBehaviour
             enemyHP.value = Mathf.InverseLerp(0, currentEnemy.maxHp, currentEnemy.currentHp);
         }
         else
+        {
             enemyUI.SetActive(false);
+            targetingArrow.SetActive(false);
+
+        }
     }
     public void UpdateSkillCooldown(int skillIndex, float skillCurrentCooldown, float skillMaxCooldown)
     {
