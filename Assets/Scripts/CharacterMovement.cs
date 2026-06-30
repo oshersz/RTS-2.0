@@ -73,10 +73,17 @@ public class CharacterMovement : MonoBehaviour
             raycastFromMouse = Camera.main.ScreenPointToRay(Input.mousePosition); //because it's a raycast, it hits invisble colliders
             if (Physics.Raycast(raycastFromMouse, out raycastHit, 500, floorMask))
             {
+                raycastHit.point = new Vector3(raycastHit.point.x, transform.position.y, raycastHit.point.z); //preventing the char from unwanted rotation;
+                moveDirection = raycastHit.point - transform.position;
             }
-            raycastHit.point = new Vector3(raycastHit.point.x, transform.position.y, raycastHit.point.z); //preventing the char from unwanted rotation;
+            else
+            {
+                //think about this more - what happens when you click on an empty space/position you can't go to?
+                raycastHit.point = transform.position;
+            }
+            
 
-            moveDirection = raycastHit.point - transform.position;
+            
 
             if (charState != State.AttackStun)
                 desiredRotation = Quaternion.LookRotation(moveDirection.normalized, Vector3.up);

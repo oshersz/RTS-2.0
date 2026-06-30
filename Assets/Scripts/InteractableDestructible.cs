@@ -12,6 +12,10 @@ public class InteractableDestructible : Interactable
         Destroy(gameObject, 5);
         GetComponent<MeshRenderer>().enabled = false; //not showing the current graphics
         GetComponent<Collider>().enabled = false;
+        if (Random.Range(0,3) == 0)
+        {
+            LootManager.singleton.DropLoot(LootDrop.Common, transform.position);
+        }
 
         gameObject.layer = LayerMask.GetMask("Default"); // making sure object is not interacted again
 
