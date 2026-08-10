@@ -736,7 +736,7 @@ MonoBehaviour:
   lootDrop: 1
   detectionLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 32832
   hitLayer:
     serializedVersion: 2
     m_Bits: 1024

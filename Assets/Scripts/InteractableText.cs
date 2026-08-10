@@ -58,8 +58,11 @@ public class InteractableText : Interactable
         }
         else
         {
-                TextBox.singleton.DisplayTexts(dialogueTexts[indexToRemember].dialogueTexts); //0
+            TextBox.singleton.DisplayTexts(dialogueTexts[indexToRemember].dialogueTexts); //0
         }
+
+        this.enabled = false;
+
     }
 
     //public override void SkipInteraction()

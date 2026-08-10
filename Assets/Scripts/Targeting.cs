@@ -104,6 +104,9 @@ public class Targeting : MonoBehaviour
 
                 CM.FollowTarget(raycastHit.transform, 2, raycastHit.transform.GetComponent<Interactable>());
 
+                //I don't remember why I did this part, maybe to show the name
+
+                /*
                 if (raycastHit.transform.TryGetComponent(out targetedEnemy))
                 {
                     if (targetedEnemy != null)
@@ -113,7 +116,13 @@ public class Targeting : MonoBehaviour
                         //CM.FollowTarget(targetedEnemy.transform, 2);
                     }
                 }
+                */
 
+                if (raycastHit.transform.GetComponent<Enemy>() != null)
+                {
+                    UIManager.singleton.CurrentEnemy(raycastHit.transform.GetComponent<Enemy>());
+                }
+                
                 CharacterVisual.singleton.MoveVFX(new Vector3(raycastHit.point.x, 0.25f, raycastHit.point.z), 1, Color.blue);
             }
             else

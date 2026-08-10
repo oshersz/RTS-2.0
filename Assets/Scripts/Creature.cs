@@ -109,6 +109,7 @@ public abstract class Creature : MonoBehaviour
         currentDespawnTime = maxDespawnTime; //enemy can't despawn while interacting with player
         if (movementType == MovementType.Idle)
         {
+            transform.LookAt(target);
             //do nothing
         }
         else if (movementType == MovementType.Chasing)
@@ -158,8 +159,13 @@ public abstract class Creature : MonoBehaviour
             target.position = new Vector3(target.position.x, transform.position.y, target.position.z); //preventing accidental Y movement
             transform.LookAt(target);
             //if hostile & possible to attack
-            if (behaviorType == BehaviorType.Agressive && creatureWeapon!= null && creatureWeapon.stats[(int)Stats.AttackRange] >= Vector3.Distance(target.position, transform.position)) //if in range to attack
+            if ((behaviorType == BehaviorType.Agressive || behaviorType == BehaviorType.Friendly) && creatureWeapon!= null && creatureWeapon.stats[(int)Stats.AttackRange] >= Vector3.Distance(target.position, transform.position)) //if in range to attack
             {
+                if (behaviorType == BehaviorType.Friendly && target.gameObject.layer == LayerMask.NameToLayer("Player"))
+                {
+                    return;
+                }
+
                 if (Time.time>attackCD)
                 {
                     attackCD = Time.time + (1f / creatureWeapon.stats[(int)Stats.AttackSpeed]);
@@ -179,6 +185,7 @@ public abstract class Creature : MonoBehaviour
                         //CharacterStats.singleton.currentHealth -= attackDamage;
                         //CharacterStats.singleton.TakeDamage(attackDamage);
                         anim.SetTrigger("MeleeAttack");
+                        lastTarget = target;
                         //plan b
                         /**
                         if (target.TryGetComponent<CharacterStats>(out CharacterStats heroStats))
@@ -316,8 +323,12 @@ public abstract class Creature : MonoBehaviour
             Destroy(gameObject);
         }
         else
-            UIManager.singleton.CurrentEnemy(this);
-
+        {
+            if (behaviorType != BehaviorType.Friendly)
+            {
+                UIManager.singleton.CurrentEnemy(this);
+            }
+        }
         ChangeBehavior();
     }
 
@@ -333,6 +344,14 @@ public abstract class Creature : MonoBehaviour
 
         if (detectionType == DetectionType.OnLineOfSight)
             detectionType = DetectionType.OnRadius;
+
+        if (behaviorType == BehaviorType.Friendly)
+        {
+            movementType = MovementType.Chasing;
+
+            //detectionLayer = LayerMask.GetMask("Player", "Enemy");
+            gameObject.layer = LayerMask.NameToLayer("Ally");
+        }
     }
 
     public virtual void RegenHp()
@@ -345,19 +364,36 @@ public abstract class Creature : MonoBehaviour
 
     public void DealDamage() //for animation event
     {
-        if (Random.Range(0, 100) > CharacterStats.singleton.characterStats[(int)Stats.DodgeChance])
+        //rethink this segment
+        if (lastTarget!=null)
         {
-            //if you weren't able to dodge
-            CharacterStats.singleton.TakeDamage(attackDamage, DamageType.MeleePhysical);
+            if (lastTarget.GetComponent<Enemy>() != null)
+            {
+                lastTarget.GetComponent<Enemy>().TakeDamage(attackDamage);
+            }
+            else if (lastTarget.GetComponent<Ally>() != null)
+            {
+                lastTarget.GetComponent<Ally>().TakeDamage(attackDamage);
+            }
+            else if (Random.Range(0, 100) > CharacterStats.singleton.characterStats[(int)Stats.DodgeChance])
+            {
+                //if you weren't able to dodge
+                CharacterStats.singleton.TakeDamage(attackDamage, DamageType.MeleePhysical);
+            }
         }
-        
+
+
     }
 
     public void ShootArrow() //for animation event
     {
-        GameObject tempProjectile = Instantiate(creatureWeapon.projectilePrefab, transform.position, transform.rotation, null);
-        tempProjectile.GetComponent<Attacks>().target = lastTarget.transform;
-        tempProjectile.GetComponent<Attacks>().damage = attackDamage;
+        if (lastTarget!=null)
+        {
+            GameObject tempProjectile = Instantiate(creatureWeapon.projectilePrefab, transform.position, transform.rotation, null);
+            tempProjectile.GetComponent<Attacks>().target = lastTarget.transform;
+            tempProjectile.GetComponent<Attacks>().damage = attackDamage;
+        }
+
     }
 
     public int ExpCalc(LootDrop enemyRarity)

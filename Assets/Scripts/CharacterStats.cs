@@ -150,11 +150,13 @@ public class CharacterStats : MonoBehaviour
     {
         if (damageType == DamageType.MeleePhysical)
         {
-            currentHealth -= Mathf.Max(0,damage - characterStats[(int)Stats.PhysicalDefense]);
+            currentHealth -= Mathf.Max(0, damage - characterStats[(int)Stats.PhysicalDefense]);
         }
         else if (damageType == DamageType.RangedPhysical)
         {
-            currentHealth -= Mathf.Max(0, (int)(damage - (characterStats[(int)Stats.PhysicalDefense/3])));
+            //Debug.Log(characterStats[(int)Stats.PhysicalDefense]);
+           // Debug.Log(Mathf.Max(0, (int)(damage - (characterStats[(int)Stats.PhysicalDefense / 3]))));
+            currentHealth -= Mathf.Max(0, (int)(damage - (characterStats[(int)Stats.PhysicalDefense] / 3)));
         }
         else
         {

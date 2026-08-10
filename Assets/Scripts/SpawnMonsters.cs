@@ -60,9 +60,15 @@ public class SpawnMonsters : MonoBehaviour
             //spawnLocation = spawnPoint;
 
             if (Random.Range(0, 2) == 1)
-                Instantiate(enemyPrefab, spawnLocation, Quaternion.identity, dungeonParent); //spawnParent
+            {
+                GameObject enemy = Instantiate(enemyPrefab, spawnLocation, Quaternion.identity, dungeonParent); //spawnParent
+                enemy.GetComponent<Enemy>().maxDespawnTime = 120;
+            }
             else
-                Instantiate(enemyPrefab2, spawnLocation, Quaternion.identity, dungeonParent); //spawnParent
+            {
+                GameObject enemy = Instantiate(enemyPrefab2, spawnLocation, Quaternion.identity, dungeonParent); //spawnParent
+                enemy.GetComponent<Enemy>().maxDespawnTime = 120;
+            }
             //spawnTimer = Time.time + spawnCooldown;
         }
     }

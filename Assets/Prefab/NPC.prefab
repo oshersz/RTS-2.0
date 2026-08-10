@@ -150,7 +150,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 18bbfb5ba5b48134a8c65daf51c1bab5, type: 2}
+  - {fileID: 2100000, guid: 564fdd97520494247a69d95c46d782e0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -421,10 +421,11 @@ GameObject:
   m_Component:
   - component: {fileID: 9039134486375680919}
   - component: {fileID: 3210438948264085577}
-  - component: {fileID: 5367408101357034641}
+  - component: {fileID: 7393965581486218435}
   - component: {fileID: 8216859886158954437}
-  m_Layer: 9
-  m_Name: Melee Enemy
+  - component: {fileID: 4973731047975077939}
+  m_Layer: 11
+  m_Name: NPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -469,7 +470,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5367408101357034641
+--- !u!114 &7393965581486218435
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -478,26 +479,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 7532755114399543655}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b3895a293f08d4438799585c15321a2, type: 3}
+  m_Script: {fileID: 11500000, guid: f0c81888b16571647bc308e87733f4d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementType: 1
-  behaviorType: 0
+  movementType: 0
+  behaviorType: 2
   detectionType: 0
   lootDrop: 0
   detectionLayer:
     serializedVersion: 2
-    m_Bits: 32832
+    m_Bits: 576
   hitLayer:
     serializedVersion: 2
     m_Bits: 1024
-  creatureWeapon: {fileID: 11400000, guid: b97403c2653b71e42bb6ecb6f6d7967d, type: 2}
-  enemyName: Melee Enemy
-  maxHp: 5
-  currentHp: 5
-  moveSpeed: 3
-  detectionRadius: 10
-  maxDespawnTime: 20
+  creatureWeapon: {fileID: 11400000, guid: 42bb9b21de2d47b41828e10467bf546c, type: 2}
+  enemyName: Ally NPC
+  maxHp: 10
+  currentHp: 0
+  moveSpeed: 4
+  detectionRadius: 15
+  maxDespawnTime: 98
   currentDespawnTime: 0
   startingPosition: {x: 0, y: 0, z: 0}
 --- !u!95 &8216859886158954437
@@ -522,6 +523,34 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4973731047975077939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7532755114399543655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eead1d1b10e14f147899cc0f20c97768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interacted: 0
+  interactionEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7393965581486218435}
+        m_TargetAssemblyTypeName: Ally, Assembly-CSharp
+        m_MethodName: ChangeBehavior
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8369208537476328882
 GameObject:
   m_ObjectHideFlags: 0

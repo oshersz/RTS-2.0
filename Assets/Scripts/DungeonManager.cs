@@ -224,7 +224,7 @@ public class DungeonManager : MonoBehaviour
                     dungeonSpawnPos = new Vector3(spawnPos.x + i * 10, 0, spawnPos.z + j * 10);
                     LootManager.singleton.DropLoot(LootDrop.Rare, dungeonSpawnPos);
 
-                    GameObject backPortal = Instantiate(tilePrefab, dungeonSpawnPos, Quaternion.identity, parent.transform);
+                    GameObject backPortal = Instantiate(portal, dungeonSpawnPos, Quaternion.identity, parent.transform);
                     backPortal.GetComponent<BackPortal>().returnPos = returnPos;
                 }
             }

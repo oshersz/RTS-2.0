@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da1ca8b0a5e035344a526fec935423cf, type: 3}
-  m_Name: Belt Buckle
+  m_Name: Ally Bow
   m_EditorClassIdentifier: 
-  id: 9
-  itemSprite: {fileID: 21300000, guid: 61a8c0db2ce707742b1b1667a03d8a6c, type: 3}
+  id: 0
+  itemSprite: {fileID: 0}
   itemType: 5
   rarity: 0
-  owned: 1
-  itemName: Belt Buckle
-  value: 22
+  owned: 0
+  itemName: 
+  value: 0
   equipped: 0
-  equipmentType: 5
-  weaponType: 0
-  weaponRangeType: 0
-  projectilePrefab: {fileID: 0}
+  equipmentType: 0
+  weaponType: 1
+  weaponRangeType: 1
+  projectilePrefab: {fileID: 5047552725680048366, guid: 6109ccd9b1b616f4594a18abe73a6980, type: 3}
   stats:
-  - 0
-  - 0
-  - 0
+  - 1
+  - 0.5
+  - 5.5
   - 0
   - 0
   - 0
