@@ -93,7 +93,7 @@ public class Targeting : MonoBehaviour
                 CM.FollowTarget(targetedEnemy.transform, attackRange);
 
             }
-            else if (Physics.Raycast(raycastFromMouse, out raycastHit, 500, interactableLayer)) // checking if clicked on NPC
+            else if (Physics.BoxCast(raycastFromMouse.origin, Vector3.one * 0.5f, raycastFromMouse.direction, out raycastHit, Quaternion.identity, 500, interactableLayer)) // checking if clicked on NPC //(Physics.Raycast(raycastFromMouse, out raycastHit, 500, interactableLayer))
             {
                 //raycastHit.transform.GetComponent<Interactable>().Interact();
 
@@ -122,7 +122,11 @@ public class Targeting : MonoBehaviour
                 {
                     UIManager.singleton.CurrentEnemy(raycastHit.transform.GetComponent<Enemy>());
                 }
-                
+                if (raycastHit.transform.GetComponent<Ally>() != null)
+                {
+                    UIManager.singleton.CurrentEnemy(raycastHit.transform.GetComponent<Ally>());
+                }
+
                 CharacterVisual.singleton.MoveVFX(new Vector3(raycastHit.point.x, 0.25f, raycastHit.point.z), 1, Color.blue);
             }
             else

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.Collections.Generic;
 
 public class UIManager : MonoBehaviour
 {
@@ -35,6 +36,26 @@ public class UIManager : MonoBehaviour
     private float WSkillStarterCooldown;
     private float WSkillNextCooldown;
 
+    [Header("Allies")]
+    [SerializeField] GameObject allyUI;
+    [SerializeField] GameObject allyWindow;
+    //List<Ally> allies = new List<Ally>();
+    //List<GameObject> alliesUI = new List<GameObject>();
+    private int allyCount;
+    List<AllyUI> allies = new List<AllyUI>();
+
+    public struct AllyUI
+    {
+        public Ally ally;
+        public GameObject UI;
+        public AllyUI(Ally ally, GameObject UI)
+        {
+            this.ally = ally;
+            this.UI = UI;
+        }
+    }
+
+
 
 
     private void Awake()
@@ -66,7 +87,7 @@ public class UIManager : MonoBehaviour
 
         OpenCharacterWindow();
         OpenInventory();
-
+        //UpdateAllies();
     }
 
     public void CurrentEnemy(Creature targetedEnemy)
@@ -88,6 +109,42 @@ public class UIManager : MonoBehaviour
 
         }
     }
+
+    public void AddAlly(Ally ally)
+    {
+        if (!allyWindow.activeSelf)
+        {
+            allyWindow.SetActive(true);
+        }
+        GameObject newAllyUI = Instantiate(allyUI, allyWindow.transform);
+        allies.Add(new AllyUI(ally,newAllyUI));
+        
+        //newAllyUI.name = "NPC Ally " + allies.Count;
+        newAllyUI.GetComponent<TextMeshProUGUI>().text = "NPC Ally "+ allies.Count;
+        newAllyUI.GetComponent<Slider>().value = Mathf.InverseLerp(0, ally.maxHp, ally.currentHp);
+    }
+
+    public void UpdateAllies()
+    {
+        for (int i = allyWindow.transform.childCount -1;i>=0;i--) //allies.Count -1
+        {
+            if (allies[i].ally == null)
+            {
+                Destroy(allies[i].UI);
+                allies.RemoveAt(i);
+            }
+            else
+            {
+                allies[i].UI.GetComponent<Slider>().value = Mathf.InverseLerp(0, allies[i].ally.maxHp, allies[i].ally.currentHp);
+            }
+
+        }
+        if (allyWindow.transform.childCount == 0)
+        {
+            allyWindow.SetActive(false);
+        }
+    }
+
     public void UpdateSkillCooldown(int skillIndex, float skillCurrentCooldown, float skillMaxCooldown)
     {
         if (skillIndex == 0)

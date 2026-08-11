@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 3210438948264085577}
   - component: {fileID: 7393965581486218435}
   - component: {fileID: 8216859886158954437}
-  - component: {fileID: 4973731047975077939}
+  - component: {fileID: 1230170468296082387}
   m_Layer: 11
   m_Name: NPC
   m_TagString: Untagged
@@ -523,7 +523,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4973731047975077939
+--- !u!114 &1230170468296082387
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -532,7 +532,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7532755114399543655}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eead1d1b10e14f147899cc0f20c97768, type: 3}
+  m_Script: {fileID: 11500000, guid: ce7bf1c236de6164488012a3a8e7c18a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interacted: 0
@@ -551,6 +551,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7393965581486218435}
+        m_TargetAssemblyTypeName: Ally, Assembly-CSharp
+        m_MethodName: AddAlly
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  gameObjectNeededForInteraction: {fileID: 0}
+  dialogueTexts:
+  - {fileID: 11400000, guid: 2cc4d5698de25ba498cf86d02a5ddb20, type: 2}
 --- !u!1 &8369208537476328882
 GameObject:
   m_ObjectHideFlags: 0
