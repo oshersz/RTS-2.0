@@ -23,6 +23,8 @@ public class CharacterVisual : MonoBehaviour
     [SerializeField] Transform aerialTargetingIndicator;
     [SerializeField] Transform radiusTargetingIndicator;
 
+    [SerializeField] Animator characterReactionsAnim;
+
 
     private void Awake()
     {
@@ -75,4 +77,33 @@ public class CharacterVisual : MonoBehaviour
         else if (bodyPart == 2)
             weaponGFX.mesh = weaponMeshes[(int)rarity];
     }
+
+    public void React(Reactions reaction)
+    {
+        if (reaction == Reactions.Damage)
+        {
+            characterReactionsAnim.SetTrigger("Damage");
+        }
+        else if (reaction == Reactions.Vicious)
+        {
+            characterReactionsAnim.SetTrigger("Vicious");
+        }
+        else if (reaction == Reactions.Worried)
+        {
+            characterReactionsAnim.SetBool("Worried",true);
+        }
+        else if (reaction == Reactions.Normal)
+        {
+            characterReactionsAnim.SetBool("Worried", false);
+        }
+
+    }
+}
+
+public enum Reactions
+{
+    Normal,
+    Damage,
+    Vicious,
+    Worried
 }

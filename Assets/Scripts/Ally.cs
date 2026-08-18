@@ -13,6 +13,8 @@ public class Ally : Creature
 
     bool allyAdded;
 
+    private bool colliding;
+
     void Start()
     {
         startingPosition = transform.position;

@@ -140,7 +140,8 @@ public class CharacterStats : MonoBehaviour
                 if (Random.Range(0,100) > characterStats[(int)Stats.DodgeChance])
                 {
                     //if you weren't able to dodge
-                    TakeDamage(currentAttack.damage,DamageType.RangedPhysical); 
+                    TakeDamage(currentAttack.damage,DamageType.RangedPhysical);
+                    CharacterVisual.singleton.React(Reactions.Damage);
                 }
             }
         }
@@ -180,6 +181,14 @@ public class CharacterStats : MonoBehaviour
         }
 
 
+        if (Mathf.InverseLerp(0,maxHealth,currentHealth)<0.35)
+        {
+            CharacterVisual.singleton.React(Reactions.Worried);
+        }
+        else
+        {
+            CharacterVisual.singleton.React(Reactions.Normal);
+        }
 
 
         if (currentHealth<=0)

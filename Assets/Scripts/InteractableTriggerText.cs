@@ -59,7 +59,8 @@ public class InteractableTriggerText : Interactable
             TextBox.singleton.DisplayTexts(dialogueTexts[indexToRemember].dialogueTexts); //0
         }
 
-        this.enabled = false;
+        Destroy(this);
+        //this.enabled = false;
 
     }
 }

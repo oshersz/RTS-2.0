@@ -9,6 +9,7 @@ public class LevelUpSelection : MonoBehaviour
 
     private void OnEnable() //consider transferring the upgrades themselves to here
     {
+        Time.timeScale = 0;
         if (levelUpOptions == LevelUpOptions.Health)
         {
             upgradeDescription.text = "Upgrades Max Health by 25%, from " + CharacterStats.singleton.maxHealth + " to " + (CharacterStats.singleton.maxHealth * 1.25f);
@@ -54,6 +55,8 @@ public class LevelUpSelection : MonoBehaviour
     public void LevelUp()
     {
         CharacterStats.singleton.LevelUpSelect(levelUpOptions);
+        CharacterVisual.singleton.React(Reactions.Vicious);
+        Time.timeScale = 1;
     }
 }
 

@@ -50,7 +50,7 @@ public class Targeting : MonoBehaviour
         enemyLayer = 512; //512 is the 10th layer
         floorMask = 256;
         //interactableLayer = LayerMask.NameToLayer("Interactable");
-        interactableLayer = LayerMask.GetMask("Interactable");
+        interactableLayer = LayerMask.GetMask("Interactable","Ally");
         charAnim = GetComponent<Animator>();
 
         SaveWeaponStats();
@@ -125,6 +125,8 @@ public class Targeting : MonoBehaviour
                 if (raycastHit.transform.GetComponent<Ally>() != null)
                 {
                     UIManager.singleton.CurrentEnemy(raycastHit.transform.GetComponent<Ally>());
+                    //Debug.Log("ally" + raycastHit.transform.GetComponent<Ally>().enemyName);
+                    //fchange interactable layer to include "ally"
                 }
 
                 CharacterVisual.singleton.MoveVFX(new Vector3(raycastHit.point.x, 0.25f, raycastHit.point.z), 1, Color.blue);

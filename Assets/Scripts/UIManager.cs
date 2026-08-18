@@ -126,17 +126,21 @@ public class UIManager : MonoBehaviour
 
     public void UpdateAllies()
     {
-        for (int i = allyWindow.transform.childCount -1;i>=0;i--) //allies.Count -1
+        for (int i = allies.Count - 1; i>=0;i--) //allies.Count -1 //allyWindow.transform.childCount -1
         {
-            if (allies[i].ally == null)
+            if (allies[i].ally!=null || allies[i].UI!=null)
             {
-                Destroy(allies[i].UI);
-                allies.RemoveAt(i);
+                if (allies[i].ally == null)
+                {
+                    Destroy(allies[i].UI);
+                    allies.RemoveAt(i);
+                }
+                else
+                {
+                    allies[i].UI.GetComponent<Slider>().value = Mathf.InverseLerp(0, allies[i].ally.maxHp, allies[i].ally.currentHp);
+                }
             }
-            else
-            {
-                allies[i].UI.GetComponent<Slider>().value = Mathf.InverseLerp(0, allies[i].ally.maxHp, allies[i].ally.currentHp);
-            }
+
 
         }
         if (allyWindow.transform.childCount == 0)

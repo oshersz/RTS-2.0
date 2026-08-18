@@ -320,6 +320,7 @@ public abstract class Creature : MonoBehaviour
             LootManager.singleton.DropLoot(lootDrop, transform.position);
             CharacterStats.singleton.GetExp(ExpCalc(lootDrop));
             UIManager.singleton.CurrentEnemy(null);
+            CharacterVisual.singleton.React(Reactions.Vicious);
             Destroy(gameObject);
         }
         else
@@ -374,11 +375,13 @@ public abstract class Creature : MonoBehaviour
             else if (lastTarget.GetComponent<Ally>() != null)
             {
                 lastTarget.GetComponent<Ally>().TakeDamage(attackDamage);
+                UIManager.singleton.UpdateAllies();
             }
             else if (Random.Range(0, 100) > CharacterStats.singleton.characterStats[(int)Stats.DodgeChance])
             {
                 //if you weren't able to dodge
                 CharacterStats.singleton.TakeDamage(attackDamage, DamageType.MeleePhysical);
+                CharacterVisual.singleton.React(Reactions.Damage);
             }
         }
 
