@@ -122,14 +122,14 @@ public class Ally : Creature
                     Destroy(hits[i].gameObject);
                     TakeDamage(currentAttack.damage);
                 }
-                else if (currentAttack.attackType == Attack.FirstTarget)
+                else if (currentAttack.attackType == Attack.FirstTarget) //allies are not supposed to get hit from hero's spells
                 {
-                    Destroy(hits[i].gameObject);
-                    TakeDamage(currentAttack.damage);
+                    //Destroy(hits[i].gameObject);
+                    //TakeDamage(currentAttack.damage);
                 }
                 else if (currentAttack.attackType == Attack.AreaOfEffect)
                 {
-                    TakeDamage(currentAttack.damage);
+                    //TakeDamage(currentAttack.damage);
                 }
 
                 UIManager.singleton.UpdateAllies();

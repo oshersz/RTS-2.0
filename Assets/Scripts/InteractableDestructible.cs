@@ -16,6 +16,10 @@ public class InteractableDestructible : Interactable
         {
             LootManager.singleton.DropLoot(LootDrop.Common, transform.position);
         }
+        if (Random.Range(0,5) == 0)
+        {
+            SpawnMonsters.singleton.Spawn(transform.position);
+        }
 
         gameObject.layer = LayerMask.GetMask("Default"); // making sure object is not interacted again
 

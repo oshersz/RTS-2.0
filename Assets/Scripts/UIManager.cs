@@ -149,6 +149,14 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void TeleportAllies(Vector3 teleportPosition)
+    {
+        for (int i = allies.Count - 1; i >= 0; i--) //allies.Count -1 //allyWindow.transform.childCount -1
+        {
+            allies[i].ally.transform.position = teleportPosition;
+        }
+    }
+
     public void UpdateSkillCooldown(int skillIndex, float skillCurrentCooldown, float skillMaxCooldown)
     {
         if (skillIndex == 0)

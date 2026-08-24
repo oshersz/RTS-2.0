@@ -16,10 +16,13 @@ public class BackPortal : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            Debug.Log("portal working");
+            //Debug.Log("portal working");
             other.GetComponent<CharacterController>().enabled = false;
             other.transform.position = returnPos;
             other.GetComponent<CharacterController>().enabled = true;
+
+            UIManager.singleton.TeleportAllies(returnPos);
+            DungeonManager.DestroyDungeon();
         }
     }
 

@@ -4,6 +4,7 @@ public class LootManager : MonoBehaviour
 {
     public static LootManager singleton { get; private set; }
 
+    [SerializeField] Transform lootParent;
     [SerializeField] GameObject moneyPrefab;
     [SerializeField] GameObject[] commonItems;
     [SerializeField] GameObject[] rareItems;
@@ -48,11 +49,11 @@ public class LootManager : MonoBehaviour
 
             if (Random.Range(0,100)<70) //high chance for a common drop
             {
-                Instantiate(commonItems[Random.Range(0,commonItems.Length)], desiredLootPosition, transform.rotation, null); 
+                Instantiate(commonItems[Random.Range(0,commonItems.Length)], desiredLootPosition, transform.rotation, lootParent); 
             }
             if (Random.Range(0, 100) < 30 + chanceInc) //lower chance of a rare drop
             {
-                Instantiate(rareItems[Random.Range(0, rareItems.Length )], desiredLootPosition, transform.rotation, null); // commonItems.Length-1?
+                Instantiate(rareItems[Random.Range(0, rareItems.Length )], desiredLootPosition, transform.rotation, lootParent); // commonItems.Length-1?
             }
         }
 
@@ -62,15 +63,15 @@ public class LootManager : MonoBehaviour
 
             if (Random.Range(0, 100) < 55 + chanceInc) //high chance for a rare drop
             {
-                Instantiate(rareItems[Random.Range(0, rareItems.Length)], desiredLootPosition, transform.rotation, null);
+                Instantiate(rareItems[Random.Range(0, rareItems.Length)], desiredLootPosition, transform.rotation, lootParent);
             }
             if (Random.Range(0, 100) < 40) //good chance to get at least one common
             {
-                Instantiate(commonItems[Random.Range(0, commonItems.Length)], desiredLootPosition, transform.rotation, null);
+                Instantiate(commonItems[Random.Range(0, commonItems.Length)], desiredLootPosition, transform.rotation, lootParent);
             }
             if (Random.Range(0, 100) < 40) 
             {
-                Instantiate(commonItems[Random.Range(0, commonItems.Length)], desiredLootPosition, transform.rotation, null);
+                Instantiate(commonItems[Random.Range(0, commonItems.Length)], desiredLootPosition, transform.rotation, lootParent);
             }
         }
 
@@ -80,15 +81,15 @@ public class LootManager : MonoBehaviour
 
             if (Random.Range(0, 100) < 35 + chanceInc/2) //reasonable chance for a scarce drop
             {
-                Instantiate(scarceItems[Random.Range(0, scarceItems.Length)], desiredLootPosition, transform.rotation, null);
+                Instantiate(scarceItems[Random.Range(0, scarceItems.Length)], desiredLootPosition, transform.rotation, lootParent);
             }
             if (Random.Range(0, 100) < 100) //at least one guranteed rare
             {
-                Instantiate(rareItems[Random.Range(0, rareItems.Length)], desiredLootPosition, transform.rotation, null);
+                Instantiate(rareItems[Random.Range(0, rareItems.Length)], desiredLootPosition, transform.rotation, lootParent);
             }
             if (Random.Range(0, 100) < 25 + chanceInc)
             {
-                Instantiate(rareItems[Random.Range(0, rareItems.Length)], desiredLootPosition, transform.rotation, null);
+                Instantiate(rareItems[Random.Range(0, rareItems.Length)], desiredLootPosition, transform.rotation, lootParent);
             }
         }
 
@@ -98,30 +99,30 @@ public class LootManager : MonoBehaviour
 
             if (Random.Range(0, 100) < 15 + chanceInc / 4) //high  chance for a scarce drop
             {
-                Instantiate(nonexistentItems[Random.Range(0, nonexistentItems.Length)], desiredLootPosition, transform.rotation, null);
+                Instantiate(nonexistentItems[Random.Range(0, nonexistentItems.Length)], desiredLootPosition, transform.rotation, lootParent);
             }
             if (Random.Range(0, 100) < 60 + chanceInc/2) //high  chance for a scarce drop
             {
-                Instantiate(scarceItems[Random.Range(0, scarceItems.Length)], desiredLootPosition, transform.rotation, null);
+                Instantiate(scarceItems[Random.Range(0, scarceItems.Length)], desiredLootPosition, transform.rotation, lootParent);
             }
             if (Random.Range(0, 100) < 20 + chanceInc/2) //small  chance for an additional scarce drop
             {
-                Instantiate(scarceItems[Random.Range(0, scarceItems.Length)], desiredLootPosition, transform.rotation, null);
+                Instantiate(scarceItems[Random.Range(0, scarceItems.Length)], desiredLootPosition, transform.rotation, lootParent);
             }
             if (Random.Range(0, 100) < 100) //at least two guranteed rares
             {
-                Instantiate(rareItems[Random.Range(0, rareItems.Length)], desiredLootPosition, transform.rotation, null);
-                Instantiate(rareItems[Random.Range(0, rareItems.Length)], desiredLootPosition, transform.rotation, null);
+                Instantiate(rareItems[Random.Range(0, rareItems.Length)], desiredLootPosition, transform.rotation, lootParent);
+                Instantiate(rareItems[Random.Range(0, rareItems.Length)], desiredLootPosition, transform.rotation, lootParent);
             }
             if (Random.Range(0, 100) < 40 + chanceInc)
             {
-                Instantiate(rareItems[Random.Range(0, rareItems.Length)], desiredLootPosition, transform.rotation, null);
+                Instantiate(rareItems[Random.Range(0, rareItems.Length)], desiredLootPosition, transform.rotation, lootParent);
             }
 
         }
         if (moneyAmount!=0)
         {
-            GameObject tempCoinDrop = Instantiate(moneyPrefab, desiredLootPosition, transform.rotation, null);
+            GameObject tempCoinDrop = Instantiate(moneyPrefab, desiredLootPosition, transform.rotation, lootParent);
             tempCoinDrop.name = moneyAmount + "coins"; // move when parsec performes better !
         }
     }

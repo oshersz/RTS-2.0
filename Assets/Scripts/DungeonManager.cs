@@ -6,9 +6,11 @@ public class DungeonManager : MonoBehaviour
     public GameObject tilePrefab;
     private Vector3 spawnPos; //make it private it make it random later
     [SerializeField] GameObject portal;
+    [SerializeField] GameObject interactable;
 
     [SerializeField] Transform player; // I wish I didn't need to do this
     [SerializeField] SpawnMonsters monsterSpawner; //this too
+    public static GameObject lastActiveDungeon; //this too
     void Start()
     {
         //GenerateDungeon();
@@ -28,6 +30,8 @@ public class DungeonManager : MonoBehaviour
         //oh no it's like computer sciences all over again
         GameObject parent = new GameObject();
         parent.name = "Generated Dungeon";
+
+        lastActiveDungeon = parent;
 
         int[,] dungeonMatrix = new int[10,10];
         DungeonTile[,] tileMatrix = new DungeonTile[10,10];
@@ -205,6 +209,8 @@ public class DungeonManager : MonoBehaviour
         player.position = startingTilePosition;
         player.GetComponent<CharacterController>().enabled = true;
 
+        UIManager.singleton.TeleportAllies(startingTilePosition);
+
         //change this later
         for (int i = 0; i < columnLength; i++) //generating the matrix
         {
@@ -218,6 +224,16 @@ public class DungeonManager : MonoBehaviour
                     {
                         monsterSpawner.Spawn(dungeonSpawnPos, parent.transform);
                     }
+
+                    int interactablesOnTile = Random.Range(0, 3);
+                    for (int d = 0;d<interactablesOnTile;d++)
+                    {
+                        Vector3 spawnLocation = new Vector3(Random.Range(-5f, 5f), 0, Random.Range(-5f, 5f));
+
+                        Instantiate(interactable, dungeonSpawnPos + spawnLocation, Quaternion.identity, parent.transform); //adding the interactables into the dungeon
+                    }
+
+
                 }
                 if (tileMatrix[i, j].tileType == TileType.Treasure)
                 {
@@ -229,5 +245,10 @@ public class DungeonManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public static void DestroyDungeon()
+    {
+        Destroy(lastActiveDungeon);
     }
 }

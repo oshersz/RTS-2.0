@@ -47,16 +47,31 @@ public class InteractableTriggerText : Interactable
         }
         if (dialogueTexts[indexToRemember].conditionForDialogue == DialogueText.Conditions.NeedsGameObjectInteraction && gameObjectNeededForInteraction.interacted) //lord have mercy
         {
-            TextBox.singleton.DisplayTexts(dialogueTexts[indexToRemember].dialogueTexts);
+            if (TextBox.singleton.IsDialogueActive())
+                TextBox.singleton.SkipInteraction();
+            else
+                TextBox.singleton.DisplayTexts(dialogueTexts[indexToRemember].dialogueTexts);
+
+
+
+
         }
         else if (dialogueTexts[indexToRemember].conditionForDialogue == DialogueText.Conditions.HasNextDialogue)
         {
-            TextBox.singleton.DisplayTexts(dialogueTexts[indexToRemember].dialogueTexts);
+            if (TextBox.singleton.IsDialogueActive())
+                TextBox.singleton.SkipInteraction();
+            else
+                TextBox.singleton.DisplayTexts(dialogueTexts[indexToRemember].dialogueTexts);
             priorities[indexToRemember] = -1;
+
         }
         else
         {
-            TextBox.singleton.DisplayTexts(dialogueTexts[indexToRemember].dialogueTexts); //0
+            if (TextBox.singleton.IsDialogueActive())
+                TextBox.singleton.SkipInteraction();
+            else
+                TextBox.singleton.DisplayTexts(dialogueTexts[indexToRemember].dialogueTexts); //0
+
         }
 
         Destroy(this);

@@ -97,12 +97,14 @@ public class Targeting : MonoBehaviour
             {
                 //raycastHit.transform.GetComponent<Interactable>().Interact();
 
+                /* //is done in character movement, duplicate.
                 if (Vector3.Distance(transform.position,raycastHit.transform.position)<3)
                 {
                     raycastHit.transform.GetComponent<Interactable>().Interact();
                 }
+                */
 
-                CM.FollowTarget(raycastHit.transform, 2, raycastHit.transform.GetComponent<Interactable>());
+                CM.FollowTarget(raycastHit.transform, 2.5f, raycastHit.transform.GetComponent<Interactable>());
 
                 //I don't remember why I did this part, maybe to show the name
 

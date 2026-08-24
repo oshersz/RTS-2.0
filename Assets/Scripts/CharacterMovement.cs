@@ -226,6 +226,8 @@ public class CharacterMovement : MonoBehaviour
 
             moveDirection = followTargetPosition - transform.position;
 
+            //if (Quaternion.LookRotation(moveDirection.normalized, Vector3.up))
+
             desiredRotation = Quaternion.LookRotation(moveDirection.normalized, Vector3.up);
         }
         else if (charState == State.Rolling)

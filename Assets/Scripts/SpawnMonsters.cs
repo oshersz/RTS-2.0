@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class SpawnMonsters : MonoBehaviour
 {
+    public static SpawnMonsters singleton { get; private set; }
+
     [SerializeField] GameObject enemyPrefab;
     [SerializeField] GameObject enemyPrefab2;
     [SerializeField] Transform spawnParent;
@@ -10,6 +12,11 @@ public class SpawnMonsters : MonoBehaviour
     private Vector3 spawnLocation;
 
     private Quaternion startingRot;
+
+    private void Awake()
+    {
+        singleton = this;
+    }
     void Start()
     {
         spawnTimer = Time.time + spawnCooldown;
@@ -70,6 +77,25 @@ public class SpawnMonsters : MonoBehaviour
                 enemy.GetComponent<Enemy>().maxDespawnTime = 120;
             }
             //spawnTimer = Time.time + spawnCooldown;
+        }
+    }
+
+    public void Spawn(Vector3 spawnPoint)
+    {
+        spawnLocation = new Vector3(Random.Range(-5f, 5f), 0, Random.Range(-5f, 5f));
+
+        spawnLocation += spawnPoint;
+        //spawnLocation = spawnPoint;
+
+        if (Random.Range(0, 2) == 1)
+        {
+            GameObject enemy = Instantiate(enemyPrefab, spawnLocation, Quaternion.identity, spawnParent);
+            enemy.GetComponent<Enemy>().maxDespawnTime = 120;
+        }
+        else
+        {
+            GameObject enemy = Instantiate(enemyPrefab2, spawnLocation, Quaternion.identity, spawnParent);
+            enemy.GetComponent<Enemy>().maxDespawnTime = 120;
         }
     }
 
