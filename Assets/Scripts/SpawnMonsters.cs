@@ -6,6 +6,7 @@ public class SpawnMonsters : MonoBehaviour
 
     [SerializeField] GameObject enemyPrefab;
     [SerializeField] GameObject enemyPrefab2;
+    [SerializeField] GameObject strongEnemyPrefab;
     [SerializeField] Transform spawnParent;
     public float spawnCooldown;
     private float spawnTimer;
@@ -79,6 +80,20 @@ public class SpawnMonsters : MonoBehaviour
             //spawnTimer = Time.time + spawnCooldown;
         }
     }
+
+    public void Spawn(Vector3 spawnPoint, Transform dungeonParent, bool spawnStrongEnemy)
+    {
+        if (spawnStrongEnemy)
+        {
+            spawnLocation = new Vector3(Random.Range(-5f, 5f), 0, Random.Range(-5f, 5f));
+
+            spawnLocation += spawnPoint;
+
+            GameObject bossEnemy = Instantiate(strongEnemyPrefab, spawnLocation, Quaternion.identity, dungeonParent); //spawnParent
+            bossEnemy.GetComponent<Enemy>().maxDespawnTime = 240;
+        }
+    }
+
 
     public void Spawn(Vector3 spawnPoint)
     {

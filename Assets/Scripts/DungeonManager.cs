@@ -33,7 +33,7 @@ public class DungeonManager : MonoBehaviour
 
         lastActiveDungeon = parent;
 
-        int[,] dungeonMatrix = new int[10,10];
+        //int[,] dungeonMatrix = new int[10,10];
         DungeonTile[,] tileMatrix = new DungeonTile[10,10];
         Vector3 dungeonSpawnPos;
 
@@ -49,8 +49,11 @@ public class DungeonManager : MonoBehaviour
 
         parent.transform.position = spawnPos;
 
-        int columnLength = dungeonMatrix.GetLength(0);
-        int rowLength = dungeonMatrix.GetLength(1);
+        //int columnLength = dungeonMatrix.GetLength(0);
+        //int rowLength = dungeonMatrix.GetLength(1);
+
+        int columnLength = tileMatrix.GetLength(0);
+        int rowLength = tileMatrix.GetLength(1);
 
         for (int i = 0;i<columnLength;i++) //generating the matrix
         {
@@ -242,6 +245,8 @@ public class DungeonManager : MonoBehaviour
 
                     GameObject backPortal = Instantiate(portal, dungeonSpawnPos, Quaternion.identity, parent.transform);
                     backPortal.GetComponent<BackPortal>().returnPos = returnPos;
+
+                    monsterSpawner.Spawn(dungeonSpawnPos, parent.transform,true); //spawning the boss
                 }
             }
         }

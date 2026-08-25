@@ -1681,7 +1681,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   creatureWeapon: {fileID: 11400000, guid: bf14edfe2285ef2488a8e02012507bde, type: 2}
-  enemyName: Archer Enemy
+  creatureName: Ranged Enemy
   maxHp: 3
   currentHp: 5
   moveSpeed: 2

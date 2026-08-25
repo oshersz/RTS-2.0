@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class Creature : MonoBehaviour
 {
-    [Header("Enemy Behavior")]
+    [Header("Creature Behavior")]
 
     public MovementType movementType;
     public BehaviorType behaviorType;
@@ -12,15 +12,16 @@ public abstract class Creature : MonoBehaviour
     public LayerMask detectionLayer;
     public LayerMask hitLayer;
     //implement creature attacking
-    [Header("Enemy Stats")]
+    [Header("Creature Stats")]
 
     public Equipment creatureWeapon;
-    public string enemyName;
+    public string creatureName;
     public float maxHp;
     private float idleHealingTimer;
     [HideInInspector]public float currentHp;
     public float moveSpeed;
     public float detectionRadius;
+    private float startingDetectionRadius;
     public float maxDespawnTime;
     [HideInInspector]public float currentDespawnTime;
     private float attackCD;
@@ -31,11 +32,12 @@ public abstract class Creature : MonoBehaviour
     [HideInInspector]public Vector3 startingPosition;
     private bool atStartingPosition = true;
 
-    [Header("Enemy Visual")]
+    [Header("Creature Visual")]
     private Animator anim;
 
     private void Awake()
     {
+        startingDetectionRadius = detectionRadius;
         currentHp = maxHp;
         currentDespawnTime = maxDespawnTime;
         startingDetectionType = detectionType;
@@ -148,7 +150,8 @@ public abstract class Creature : MonoBehaviour
 
     public virtual void Chase(Transform target)
     {
-        if (detectionType == DetectionType.OnLineOfSight && !Physics.Raycast(transform.position, transform.forward, detectionRadius, detectionLayer))
+
+        if (detectionType == DetectionType.OnLineOfSight && !Physics.BoxCast(transform.position, Vector3.one * 1f, transform.forward, Quaternion.identity, detectionRadius, detectionLayer))
         {
             return;
         }
@@ -157,7 +160,16 @@ public abstract class Creature : MonoBehaviour
         {
             idleHealingTimer = 0; //passive healing timer is reset
             target.position = new Vector3(target.position.x, transform.position.y, target.position.z); //preventing accidental Y movement
-            transform.LookAt(target);
+            //transform.LookAt(target);
+
+            Vector3 direction = (target.position - transform.position).normalized;
+
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
+
+
+
             //if hostile & possible to attack
             if ((behaviorType == BehaviorType.Agressive || behaviorType == BehaviorType.Friendly) && creatureWeapon!= null && creatureWeapon.stats[(int)Stats.AttackRange] >= Vector3.Distance(target.position, transform.position)) //if in range to attack
             {
@@ -238,7 +250,7 @@ public abstract class Creature : MonoBehaviour
     public virtual void LinearPatrol(Transform target)
     {
         bool canSeeTarget = true;
-        if (detectionType == DetectionType.OnLineOfSight && !Physics.Raycast(transform.position, transform.forward, detectionRadius, detectionLayer))
+        if (detectionType == DetectionType.OnLineOfSight && !Physics.BoxCast(transform.position, Vector3.one * 1f, transform.forward, Quaternion.identity, detectionRadius, detectionLayer))
         {
             canSeeTarget = false;
         }
@@ -265,7 +277,7 @@ public abstract class Creature : MonoBehaviour
     public virtual void CircularPatrol(Transform target)
     {
         bool canSeeTarget = true;
-        if (detectionType == DetectionType.OnLineOfSight && !Physics.Raycast(transform.position, transform.forward, detectionRadius, detectionLayer))
+        if (detectionType == DetectionType.OnLineOfSight && !Physics.BoxCast(transform.position, Vector3.one * 1f, transform.forward, Quaternion.identity, detectionRadius, detectionLayer))
         {
             canSeeTarget = false;
         }
@@ -314,6 +326,11 @@ public abstract class Creature : MonoBehaviour
     */
     public virtual void TakeDamage(float damageAmount)
     {
+        if (currentHp == maxHp)
+        {
+            detectionRadius *= 1.5f;
+        }
+
         currentHp-= damageAmount;
         if (currentHp <= 0)
         {
@@ -360,7 +377,15 @@ public abstract class Creature : MonoBehaviour
         idleHealingTimer += Time.deltaTime;
 
         if (currentHp < maxHp && idleHealingTimer>3)
+        {
             currentHp += maxHp / 10f * Time.deltaTime;
+            if (currentHp>=maxHp)
+            {
+                currentHp = maxHp;
+                detectionRadius = startingDetectionRadius;
+            }
+
+        }
     }
 
     public void DealDamage() //for animation event
@@ -420,6 +445,12 @@ public abstract class Creature : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
-        Gizmos.DrawLine(transform.position, transform.position + (transform.forward * detectionRadius));
+        //Gizmos.DrawLine(transform.position, transform.position + (transform.forward * detectionRadius));
+
+        //Gizmos.DrawWireCube(wireCubePos, Vector3.one * 5.5f);
+
+        Gizmos.DrawLine(transform.position + transform.right * 1f, transform.position + transform.right * 1f + (transform.forward * detectionRadius));
+        Gizmos.DrawLine(transform.position - transform.right * 1f, transform.position - transform.right * 1f + (transform.forward * detectionRadius));
+
     }
 }

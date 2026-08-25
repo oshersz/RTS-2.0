@@ -492,7 +492,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   creatureWeapon: {fileID: 11400000, guid: b97403c2653b71e42bb6ecb6f6d7967d, type: 2}
-  enemyName: Melee Enemy
+  creatureName: Melee Enemy
   maxHp: 5
   currentHp: 5
   moveSpeed: 3

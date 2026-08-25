@@ -9510,7 +9510,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   creatureWeapon: {fileID: 0}
-  enemyName: Runner
+  creatureName: 
   maxHp: 5
   currentHp: 5
   moveSpeed: 3
@@ -9946,7 +9946,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   creatureWeapon: {fileID: 0}
-  enemyName: Patroller 1
+  creatureName: 
   maxHp: 5
   currentHp: 5
   moveSpeed: 3
@@ -10598,6 +10598,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1643417120}
     m_Modifications:
+    - target: {fileID: 71185966993348332, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 71185966993348332, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3832264877460448029, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: dialogueTexts.Array.size
       value: 1
@@ -10606,6 +10614,14 @@ PrefabInstance:
       propertyPath: 'dialogueTexts.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: e9eef47e55d579c488703cd988c92815, type: 2}
+    - target: {fileID: 4375832594058946221, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375832594058946221, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4973731047975077939, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: interactionEvent.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -10645,6 +10661,14 @@ PrefabInstance:
     - target: {fileID: 5367408101357034641, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: detectionLayer.m_Bits
       value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 5391288719985421358, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5391288719985421358, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7393965581486218435, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: moveSpeed
@@ -26994,6 +27018,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1643417120}
     m_Modifications:
+    - target: {fileID: 71185966993348332, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 71185966993348332, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3832264877460448029, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: dialogueTexts.Array.size
       value: 1
@@ -27002,6 +27034,14 @@ PrefabInstance:
       propertyPath: 'dialogueTexts.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: e9eef47e55d579c488703cd988c92815, type: 2}
+    - target: {fileID: 4375832594058946221, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375832594058946221, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4973731047975077939, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: interactionEvent.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -27041,6 +27081,18 @@ PrefabInstance:
     - target: {fileID: 5367408101357034641, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: detectionLayer.m_Bits
       value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 5390737268984065100, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_Active
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5391288719985421358, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5391288719985421358, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7393965581486218435, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: creatureWeapon
@@ -35742,6 +35794,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1643417120}
     m_Modifications:
+    - target: {fileID: 71185966993348332, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 71185966993348332, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3832264877460448029, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: dialogueTexts.Array.size
       value: 1
@@ -35750,6 +35810,14 @@ PrefabInstance:
       propertyPath: 'dialogueTexts.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: e9eef47e55d579c488703cd988c92815, type: 2}
+    - target: {fileID: 4375832594058946221, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375832594058946221, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4973731047975077939, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: interactionEvent.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -35789,6 +35857,14 @@ PrefabInstance:
     - target: {fileID: 5367408101357034641, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: detectionLayer.m_Bits
       value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 5391288719985421358, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5391288719985421358, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7393965581486218435, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: moveSpeed
@@ -43027,6 +43103,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1643417120}
     m_Modifications:
+    - target: {fileID: 71185966993348332, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 71185966993348332, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3832264877460448029, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: dialogueTexts.Array.size
       value: 1
@@ -43035,6 +43119,14 @@ PrefabInstance:
       propertyPath: 'dialogueTexts.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: e9eef47e55d579c488703cd988c92815, type: 2}
+    - target: {fileID: 4375832594058946221, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375832594058946221, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4973731047975077939, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: interactionEvent.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -43074,6 +43166,14 @@ PrefabInstance:
     - target: {fileID: 5367408101357034641, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: detectionLayer.m_Bits
       value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 5391288719985421358, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5391288719985421358, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7393965581486218435, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: creatureWeapon
@@ -43182,6 +43282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 7532755114399543655, guid: ccd06ee3c2299ba48b1302eae25d3782, type: 3}
   enemyPrefab2: {fileID: 7532755114399543655, guid: 228583818eafe0c4c981033d1a8e47b9, type: 3}
+  strongEnemyPrefab: {fileID: 7532755114399543655, guid: e6f3e45e67e86ab4bb29ff5a6cdcbab5, type: 3}
   spawnParent: {fileID: 819935785}
   spawnCooldown: 4
 --- !u!23 &1106113254
@@ -43876,7 +43977,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   creatureWeapon: {fileID: 0}
-  enemyName: Patroller 2
+  creatureName: 
   maxHp: 5
   currentHp: 5
   moveSpeed: 3
@@ -46647,7 +46748,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   creatureWeapon: {fileID: 0}
-  enemyName: Chaser
+  creatureName: 
   maxHp: 5
   currentHp: 5
   moveSpeed: 3
@@ -54129,6 +54230,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1643417120}
     m_Modifications:
+    - target: {fileID: 71185966993348332, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 71185966993348332, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3832264877460448029, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: dialogueTexts.Array.size
       value: 1
@@ -54137,6 +54246,14 @@ PrefabInstance:
       propertyPath: 'dialogueTexts.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: e9eef47e55d579c488703cd988c92815, type: 2}
+    - target: {fileID: 4375832594058946221, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4375832594058946221, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4973731047975077939, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: interactionEvent.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -54176,6 +54293,14 @@ PrefabInstance:
     - target: {fileID: 5367408101357034641, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: detectionLayer.m_Bits
       value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 5391288719985421358, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5391288719985421358, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7393965581486218435, guid: f2a680c653c18094c8bd93712139ccdc, type: 3}
       propertyPath: creatureWeapon
@@ -75520,7 +75645,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   creatureWeapon: {fileID: 0}
-  enemyName: Idler
+  creatureName: 
   maxHp: 5
   currentHp: 5
   moveSpeed: 3
@@ -85755,7 +85880,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   creatureWeapon: {fileID: 11400000, guid: b97403c2653b71e42bb6ecb6f6d7967d, type: 2}
-  enemyName: NPC Test
+  creatureName: 
   maxHp: 50
   currentHp: 10
   moveSpeed: 4

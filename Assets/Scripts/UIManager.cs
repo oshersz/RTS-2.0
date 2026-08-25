@@ -99,7 +99,7 @@ public class UIManager : MonoBehaviour
             if (currentEnemy!= targetedEnemy)
                 selectVFX.Play();
             currentEnemy = targetedEnemy;
-            enemyName.text = currentEnemy.enemyName;
+            enemyName.text = currentEnemy.creatureName;
             enemyHP.value = Mathf.InverseLerp(0, currentEnemy.maxHp, currentEnemy.currentHp);
         }
         else
@@ -119,6 +119,8 @@ public class UIManager : MonoBehaviour
         GameObject newAllyUI = Instantiate(allyUI, allyWindow.transform);
         allies.Add(new AllyUI(ally,newAllyUI));
         
+        ally.creatureName = "NPC Ally " + allies.Count;
+
         //newAllyUI.name = "NPC Ally " + allies.Count;
         newAllyUI.GetComponent<TextMeshProUGUI>().text = "NPC Ally "+ allies.Count;
         newAllyUI.GetComponent<Slider>().value = Mathf.InverseLerp(0, ally.maxHp, ally.currentHp);

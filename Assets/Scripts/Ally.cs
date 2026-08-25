@@ -1,7 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine.Animations;
 
 public class Ally : Creature
 {
+    [SerializeField] Slider allyHP;
+
     private Collider[] hits;
 
     private Collider[] charDetect;
@@ -11,9 +16,9 @@ public class Ally : Creature
     private Transform closestPlayer;
     private Transform closestEnemy;
 
-    bool allyAdded;
+    private bool allyAdded;
 
-    private bool colliding;
+    //private bool colliding;
 
     void Start()
     {
@@ -34,6 +39,9 @@ public class Ally : Creature
         DetectCreatures();
 
         DetectHits();
+
+        UpdateAllyUI();
+
     }
 
     private void DetectCharacters()
@@ -98,9 +106,9 @@ public class Ally : Creature
             {
                 float distance = Vector3.Distance(creatureDetect[i].transform.position, transform.position); 
 
-                if (distance<1)
+                if (distance<1.5)
                 {
-                    creatureDetect[i].transform.position += (creatureDetect[i].transform.position - transform.position).normalized * 0.01f * Mathf.Clamp(1-distance,0,1); //0.0675
+                    creatureDetect[i].transform.position += (creatureDetect[i].transform.position - transform.position).normalized * 0.02f * Mathf.Clamp(1.5f-distance,0,1); //0.0675
                 }
             }
             
@@ -137,12 +145,35 @@ public class Ally : Creature
         }
     }
 
+    private void UpdateAllyUI()
+    {
+        allyHP.value = Mathf.InverseLerp(0, maxHp, currentHp);
+
+        //allyHP.transform.LookAt(Camera.main.transform);
+
+        allyHP.transform.rotation = Camera.main.transform.rotation;
+
+        //Quaternion lookRotation = Camera.main.transform.rotation;
+        //allyHP.transform.rotation = lookRotation;
+    }
+
     public void AddAlly()
     {
         if (!allyAdded)
         {
             UIManager.singleton.AddAlly(this);
             allyAdded = true;
+            allyHP.gameObject.SetActive(true);
+            allyHP.GetComponent<TextMeshProUGUI>().text = creatureName;
+
+            /*
+            ConstraintSource constraint = new ConstraintSource();
+            constraint.sourceTransform = Camera.main.transform;
+            constraint.weight = 1;
+
+            allyHP.GetComponent<LookAtConstraint>().SetSource(0, constraint);
+            */
+
         }
     }
 }
