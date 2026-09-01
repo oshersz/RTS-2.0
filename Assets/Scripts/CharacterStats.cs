@@ -125,12 +125,14 @@ public class CharacterStats : MonoBehaviour
 
                 if (currentAttack.attackType == Attack.Targeted && currentAttack.target == transform) // && targeted
                 {
-                    Destroy(hits[i].gameObject);
+                    //Destroy(hits[i].gameObject);
+                    currentAttack.DestroyAttack();
                     //TakeDamage(currentAttack.damage);
                 }
                 else if (currentAttack.attackType == Attack.FirstTarget)
                 {
-                    Destroy(hits[i].gameObject);
+                    //Destroy(hits[i].gameObject);
+                    currentAttack.DestroyAttack();
                     //TakeDamage(currentAttack.damage);
                 }
                 else if (currentAttack.attackType == Attack.AreaOfEffect)

@@ -127,12 +127,14 @@ public class Ally : Creature
                 Attacks currentAttack = hits[i].GetComponent<Attacks>();
                 if (currentAttack.attackType == Attack.Targeted && currentAttack.target == transform) // && targeted
                 {
-                    Destroy(hits[i].gameObject);
+                    //Destroy(hits[i].gameObject);
+                    currentAttack.DestroyAttack();
                     TakeDamage(currentAttack.damage);
                 }
                 else if (currentAttack.attackType == Attack.FirstTarget) //allies are not supposed to get hit from hero's spells
                 {
                     //Destroy(hits[i].gameObject);
+                    currentAttack.DestroyAttack();
                     //TakeDamage(currentAttack.damage);
                 }
                 else if (currentAttack.attackType == Attack.AreaOfEffect)

@@ -46,13 +46,15 @@ public class Enemy : Creature
                 Attacks currentAttack = hits[i].GetComponent<Attacks>(); 
                 if (currentAttack.attackType == Attack.Targeted && currentAttack.target == transform) // && targeted
                 {
-                    Destroy(hits[i].gameObject);
+                    //Destroy(hits[i].gameObject);
+                    currentAttack.DestroyAttack();
                     TakeDamage(currentAttack.damage);
                     //ChangeBehavior();
                 }
                 else if (currentAttack.attackType == Attack.FirstTarget)
                 {
-                    Destroy(hits[i].gameObject);
+                    //Destroy(hits[i].gameObject);
+                    currentAttack.DestroyAttack();
                     TakeDamage(currentAttack.damage);
                     //ChangeBehavior();
                 }

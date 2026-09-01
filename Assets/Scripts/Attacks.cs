@@ -6,6 +6,11 @@ public abstract class Attacks : MonoBehaviour
     public float damage;
     public Transform target;
 
+    public virtual void DestroyAttack()
+    {
+        Destroy(gameObject);
+    }
+
 }
 
 public enum Attack
