@@ -41,8 +41,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject allyWindow;
     //List<Ally> allies = new List<Ally>();
     //List<GameObject> alliesUI = new List<GameObject>();
-    private int allyCount;
+    //private int allyCount;
     List<AllyUI> allies = new List<AllyUI>();
+
+    public static float framer;
 
     public struct AllyUI
     {
@@ -87,7 +89,13 @@ public class UIManager : MonoBehaviour
 
         OpenCharacterWindow();
         OpenInventory();
-        //UpdateAllies();
+
+
+        if (framer++%60 == 0)
+        {
+            UpdateAllies();
+        }
+        
     }
 
     public void CurrentEnemy(Creature targetedEnemy)

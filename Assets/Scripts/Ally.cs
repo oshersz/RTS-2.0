@@ -106,9 +106,11 @@ public class Ally : Creature
             {
                 float distance = Vector3.Distance(creatureDetect[i].transform.position, transform.position); 
 
-                if (distance<1.5)
+                if (distance<3)
                 {
-                    creatureDetect[i].transform.position += (creatureDetect[i].transform.position - transform.position).normalized * 0.02f * Mathf.Clamp(1.5f-distance,0,1); //0.0675
+                    Vector3 moveDirection = (creatureDetect[i].transform.position - transform.position).normalized;
+                    moveDirection.y = 0;
+                    creatureDetect[i].transform.position += moveDirection * 0.02f * Mathf.Clamp(3f-distance,0,3); //0.0675
                 }
             }
             

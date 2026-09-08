@@ -36,6 +36,10 @@ public class SpawnMonsters : MonoBehaviour
         {
             Spawn();
         }
+        if (Input.GetKey(KeyCode.PageDown))
+        {
+            Spawn();
+        }
     }
 
     private void Spawn()

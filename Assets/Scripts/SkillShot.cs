@@ -13,6 +13,11 @@ public class SkillShot : Spells
     {
         attackType = Attack.FirstTarget;
         destroyTime = Time.time + destroyAfter;
+
+        //effect.startRotation = -transform.eulerAngles.y;
+        ParticleSystem.MainModule effectProperties = effect.main;
+        effectProperties.startRotation = (transform.eulerAngles.y * Mathf.Deg2Rad);
+
         //Destroy(gameObject, destroyAfter);
     }
 
