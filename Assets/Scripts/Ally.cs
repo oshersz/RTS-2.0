@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.Animations;
 
 public class Ally : Creature
 {
@@ -36,7 +35,7 @@ public class Ally : Creature
     {
         DetectCharacters();
 
-        DetectCreatures();
+        CheckCollision();
 
         DetectHits();
 
@@ -90,7 +89,7 @@ public class Ally : Creature
 
     }
 
-    private void DetectCreatures()
+    private void CheckCollision()
     {
         LayerMask creatureMask = LayerMask.GetMask("Ally");
         creatureDetect = Physics.OverlapSphere(transform.position,1, creatureMask);
@@ -131,7 +130,7 @@ public class Ally : Creature
                 {
                     //Destroy(hits[i].gameObject);
                     currentAttack.DestroyAttack();
-                    TakeDamage(currentAttack.damage);
+                    TakeDamage(currentAttack.damage, hits[i].ClosestPoint(transform.position));
                 }
                 else if (currentAttack.attackType == Attack.FirstTarget) //allies are not supposed to get hit from hero's spells
                 {

@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject enemyUI;
     [SerializeField] TextMeshProUGUI enemyName;
     [SerializeField] Slider enemyHP;
+    [SerializeField] Slider enemyTempHP;
     private Creature currentEnemy;
     [SerializeField] GameObject targetingArrow;
     [SerializeField] ParticleSystem selectVFX;
@@ -66,6 +67,8 @@ public class UIManager : MonoBehaviour
     }
     void Update()
     {
+        //Debug.Log(currentEnemy);
+
         characterHp.value = Mathf.InverseLerp(0, CharacterStats.singleton.maxHealth, CharacterStats.singleton.currentHealth);
         characterMana.value = Mathf.InverseLerp(0, CharacterStats.singleton.maxMana, CharacterStats.singleton.currentMana);
 
@@ -74,6 +77,15 @@ public class UIManager : MonoBehaviour
         {
             enemyHP.value = Mathf.InverseLerp(0, currentEnemy.maxHp, currentEnemy.currentHp);
             targetingArrow.transform.position = currentEnemy.transform.position;
+
+            if (enemyTempHP.value>enemyHP.value)
+            {
+                enemyTempHP.value -= Time.deltaTime * 0.5f;
+            }
+            else
+            {
+                enemyTempHP.value = enemyHP.value;
+            }
         }
         else
             targetingArrow.SetActive(false);
@@ -98,13 +110,13 @@ public class UIManager : MonoBehaviour
         
     }
 
-    public void CurrentEnemy(Creature targetedEnemy)
+    public void CurrentEnemy(Creature targetedEnemy, bool dead)
     {
-        if (targetedEnemy!= null)
+        if (targetedEnemy != null)
         {
             enemyUI.SetActive(true);
             targetingArrow.SetActive(true);
-            if (currentEnemy!= targetedEnemy)
+            if (currentEnemy != targetedEnemy)
                 selectVFX.Play();
             currentEnemy = targetedEnemy;
             enemyName.text = currentEnemy.creatureName;
@@ -112,8 +124,60 @@ public class UIManager : MonoBehaviour
         }
         else
         {
+
             enemyUI.SetActive(false);
             targetingArrow.SetActive(false);
+
+            //currentEnemy = null;
+
+        }
+
+        /**
+        //Debug.Log(targetedEnemy);
+        if (dead)
+        {
+            if (targetedEnemy == currentEnemy)
+            {
+                enemyUI.SetActive(false);
+                targetingArrow.SetActive(false);
+                currentEnemy = null;
+            }
+            return;
+        }
+
+        if (currentEnemy = null)
+        {
+            enemyUI.SetActive(true);
+            targetingArrow.SetActive(true);
+            if (currentEnemy != targetedEnemy)
+                selectVFX.Play();
+            currentEnemy = targetedEnemy;
+            enemyName.text = currentEnemy.creatureName;
+            enemyHP.value = Mathf.InverseLerp(0, currentEnemy.maxHp, currentEnemy.currentHp);
+        }
+        */
+    }
+
+    public void CurrentEnemy(Creature targetedEnemy)
+    {
+        //Debug.Log(targetedEnemy);
+        if (targetedEnemy != null)
+        {
+            enemyUI.SetActive(true);
+            targetingArrow.SetActive(true);
+            if (currentEnemy != targetedEnemy)
+                selectVFX.Play();
+            currentEnemy = targetedEnemy;
+            enemyName.text = currentEnemy.creatureName;
+            enemyHP.value = Mathf.InverseLerp(0, currentEnemy.maxHp, currentEnemy.currentHp);
+        }
+        else
+        {
+
+            enemyUI.SetActive(false);
+            targetingArrow.SetActive(false);
+
+            //currentEnemy = null;
 
         }
     }

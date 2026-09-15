@@ -120,15 +120,9 @@ public class Targeting : MonoBehaviour
                 }
                 */
 
-                if (raycastHit.transform.GetComponent<Enemy>() != null)
+                if (raycastHit.transform.GetComponent<Creature>() != null)
                 {
-                    UIManager.singleton.CurrentEnemy(raycastHit.transform.GetComponent<Enemy>());
-                }
-                if (raycastHit.transform.GetComponent<Ally>() != null)
-                {
-                    UIManager.singleton.CurrentEnemy(raycastHit.transform.GetComponent<Ally>());
-                    //Debug.Log("ally" + raycastHit.transform.GetComponent<Ally>().enemyName);
-                    //fchange interactable layer to include "ally"
+                    UIManager.singleton.CurrentEnemy(raycastHit.transform.GetComponent<Creature>());
                 }
 
                 CharacterVisual.singleton.MoveVFX(new Vector3(raycastHit.point.x, 0.25f, raycastHit.point.z), 1, Color.blue);
@@ -234,7 +228,7 @@ public class Targeting : MonoBehaviour
             }
             else if (characterWeaponType == WeaponType.Sword)
             {
-                targetedEnemy.TakeDamage(damage);
+                targetedEnemy.TakeDamage(damage,transform.position);
             }
             attackDelay = float.MaxValue;
 
@@ -362,7 +356,8 @@ public class Targeting : MonoBehaviour
             }
             else if (activeSpell.spellType == Spells.Spell.Positional)
             {
-                CharacterVisual.singleton.SetIndicator(RangeIndicatorType.worldPos, Vector3.one, true);
+                CharacterVisual.singleton.SetIndicator(RangeIndicatorType.worldPos, Vector3.one, true, (activeSpell.spellRadius / 2f));
+                
             }
 
         }

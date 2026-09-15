@@ -61,6 +61,24 @@ public class CharacterVisual : MonoBehaviour
         }
     }
 
+    public void SetIndicator(RangeIndicatorType indicatorType, Vector3 scaleVector, bool on,float spellRadius)
+    {
+        if (indicatorType == RangeIndicatorType.characterDirectional)
+        {
+            directionalTargetingIndicator.gameObject.SetActive(on);
+        }
+        else if (indicatorType == RangeIndicatorType.characterStatic)
+        {
+            radiusTargetingIndicator.gameObject.SetActive(on);
+            radiusTargetingIndicator.localScale = scaleVector;
+        }
+        else
+        {
+            aerialTargetingIndicator.gameObject.SetActive(on);
+            aerialTargetingIndicator.GetComponent<RangeIndicator>().SetRaycastHit(spellRadius);
+        }
+    }
+
     public void TurnOffIndicators()
     {
         directionalTargetingIndicator.gameObject.SetActive(false);

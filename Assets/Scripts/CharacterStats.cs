@@ -151,6 +151,11 @@ public class CharacterStats : MonoBehaviour
 
     public void TakeDamage(float damage, DamageType damageType)
     {
+        if (dead)
+        {
+            return;
+        }
+
         if (damageType == DamageType.MeleePhysical)
         {
             currentHealth -= Mathf.Max(0, damage - characterStats[(int)Stats.PhysicalDefense]);
@@ -195,7 +200,6 @@ public class CharacterStats : MonoBehaviour
 
         if (currentHealth<=0)
         {
-            Debug.Log("dead");
             dead = true;
             transform.Rotate(90, 0, 0);
             GetComponent<CharacterMovement>().enabled = false;

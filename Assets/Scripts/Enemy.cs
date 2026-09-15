@@ -30,7 +30,7 @@ public class Enemy : Creature
     {
         if (UIManager.framer%5==0)
         {
-            DetectCreatures();
+            CheckCollision();
         }
 
         if (UIManager.framer%20==0)
@@ -84,19 +84,19 @@ public class Enemy : Creature
                 {
                     //Destroy(hits[i].gameObject);
                     currentAttack.DestroyAttack();
-                    TakeDamage(currentAttack.damage);
+                    TakeDamage(currentAttack.damage, hits[i].ClosestPoint(transform.position));
                     //ChangeBehavior();
                 }
                 else if (currentAttack.attackType == Attack.FirstTarget)
                 {
                     //Destroy(hits[i].gameObject);
                     currentAttack.DestroyAttack();
-                    TakeDamage(currentAttack.damage);
+                    TakeDamage(currentAttack.damage, hits[i].ClosestPoint(transform.position));
                     //ChangeBehavior();
                 }
                 else if (currentAttack.attackType == Attack.AreaOfEffect)
                 {
-                    TakeDamage(currentAttack.damage);
+                    TakeDamage(currentAttack.damage, hits[i].ClosestPoint(transform.position));
                     //ChangeBehavior();
                 }
             }
@@ -104,7 +104,7 @@ public class Enemy : Creature
     }
 
 
-    private void DetectCreatures()
+    private void CheckCollision()
     {
         LayerMask creatureMask = LayerMask.GetMask("Ally","Enemy");
         creatureDetect = Physics.OverlapSphere(transform.position, 1, creatureMask);

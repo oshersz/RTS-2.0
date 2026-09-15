@@ -324,7 +324,7 @@ public abstract class Creature : MonoBehaviour
         }
     }
     */
-    public virtual void TakeDamage(float damageAmount)
+    public virtual void TakeDamage(float damageAmount,Vector3 attackPos)
     {
         if (currentHp == maxHp)
         {
@@ -336,15 +336,25 @@ public abstract class Creature : MonoBehaviour
         {
             LootManager.singleton.DropLoot(lootDrop, transform.position);
             CharacterStats.singleton.GetExp(ExpCalc(lootDrop));
-            UIManager.singleton.CurrentEnemy(null);
+            UIManager.singleton.CurrentEnemy(null,true);
             CharacterVisual.singleton.React(Reactions.Vicious);
-            Destroy(gameObject);
+            Destroy(gameObject,2.5f);
+            GetComponent<Rigidbody>().isKinematic = false;
+            anim.enabled = false;
+            //Vector3 force = new Vector3(Random.Range(-2, 2), Random.Range(1, 4), Random.Range(-2, 2)) * damageAmount;
+            Vector3 attackDirection = (transform.position - attackPos).normalized;
+            Vector3 force = attackDirection * 5 * damageAmount;
+            GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+            gameObject.layer = LayerMask.NameToLayer("Ragdolls");
+            //Destroy(GetComponent<CapsuleCollider>());
+            Destroy(this);
         }
         else
         {
             if (behaviorType != BehaviorType.Friendly)
             {
-                UIManager.singleton.CurrentEnemy(this);
+                //Debug.Log(this);
+                UIManager.singleton.CurrentEnemy(this,false);
             }
         }
         ChangeBehavior();
@@ -395,11 +405,12 @@ public abstract class Creature : MonoBehaviour
         {
             if (lastTarget.GetComponent<Enemy>() != null)
             {
-                lastTarget.GetComponent<Enemy>().TakeDamage(attackDamage);
+                lastTarget.GetComponent<Enemy>().TakeDamage(attackDamage,transform.position);
+                //UIManager.singleton.CurrentEnemy(lastTarget.GetComponent<Enemy>());
             }
             else if (lastTarget.GetComponent<Ally>() != null)
             {
-                lastTarget.GetComponent<Ally>().TakeDamage(attackDamage);
+                lastTarget.GetComponent<Ally>().TakeDamage(attackDamage,transform.position);
                 UIManager.singleton.UpdateAllies();
             }
             else if (Random.Range(0, 100) > CharacterStats.singleton.characterStats[(int)Stats.DodgeChance])
