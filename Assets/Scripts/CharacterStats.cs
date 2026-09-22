@@ -125,23 +125,22 @@ public class CharacterStats : MonoBehaviour
 
                 if (currentAttack.attackType == Attack.Targeted && currentAttack.target == transform) // && targeted
                 {
-                    //Destroy(hits[i].gameObject);
                     currentAttack.DestroyAttack();
-                    //TakeDamage(currentAttack.damage);
                 }
                 else if (currentAttack.attackType == Attack.FirstTarget)
                 {
-                    //Destroy(hits[i].gameObject);
                     currentAttack.DestroyAttack();
-                    //TakeDamage(currentAttack.damage);
                 }
                 else if (currentAttack.attackType == Attack.AreaOfEffect)
                 {
-                    //TakeDamage(currentAttack.damage);
+                    //AOE attack takes care of itself
                 }
                 if (Random.Range(0,100) > characterStats[(int)Stats.DodgeChance])
                 {
                     //if you weren't able to dodge
+
+                    //change later
+                    GetComponent<Animator>().SetTrigger("Damaged");
                     TakeDamage(currentAttack.damage,DamageType.RangedPhysical);
                     CharacterVisual.singleton.React(Reactions.Damage);
                 }
@@ -170,9 +169,9 @@ public class CharacterStats : MonoBehaviour
         {
             currentHealth -= Mathf.Max(0, damage - characterStats[(int)Stats.MagicalDefense]);
         }
-        
 
-
+        //change later
+        GetComponent<Animator>().SetTrigger("Damaged");
 
         if (damage / maxHealth > 0.1) //%10 of max hp
         {

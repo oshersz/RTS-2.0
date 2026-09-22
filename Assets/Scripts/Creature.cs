@@ -26,6 +26,7 @@ public abstract class Creature : MonoBehaviour
     [HideInInspector]public float currentDespawnTime;
     private float attackCD;
     private float attackDamage;
+    private bool attackStun = false;
 
     private Transform lastTarget;
 
@@ -76,6 +77,7 @@ public abstract class Creature : MonoBehaviour
     public virtual void Move()
     {
         RegenHp(); //enemies regenerate hp while not aggroed
+
         if (movementType == MovementType.Idle)
         {
             //do nothing
@@ -109,6 +111,7 @@ public abstract class Creature : MonoBehaviour
     public virtual void Move(Transform target)
     {
         currentDespawnTime = maxDespawnTime; //enemy can't despawn while interacting with player
+
         if (movementType == MovementType.Idle)
         {
             transform.LookAt(target);
@@ -169,6 +172,10 @@ public abstract class Creature : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 3);
 
 
+            if (attackStun) // making sure enemies still rotate toward character during attack animation
+            {
+                return;
+            }
 
             //if hostile & possible to attack
             if ((behaviorType == BehaviorType.Agressive || behaviorType == BehaviorType.Friendly) && creatureWeapon!= null && creatureWeapon.stats[(int)Stats.AttackRange] >= Vector3.Distance(target.position, transform.position)) //if in range to attack
@@ -183,19 +190,11 @@ public abstract class Creature : MonoBehaviour
                     attackCD = Time.time + (1f / creatureWeapon.stats[(int)Stats.AttackSpeed]);
                     if (creatureWeapon.weaponType == WeaponType.Bow)
                     {
-                        /* transferred to animation event
-                        GameObject tempProjectile = Instantiate(creatureWeapon.projectilePrefab, transform.position, transform.rotation, null);
-                        tempProjectile.GetComponent<Attacks>().target = target.transform;
-                        tempProjectile.GetComponent<Attacks>().damage = attackDamage;
-                        */
                         lastTarget = target;
                         anim.SetTrigger("BowAttack");
                     }
                     else if (creatureWeapon.weaponType == WeaponType.Sword)
                     {
-                        // trying to do this with animation events to coordinate with the attack timing
-                        //CharacterStats.singleton.currentHealth -= attackDamage;
-                        //CharacterStats.singleton.TakeDamage(attackDamage);
                         anim.SetTrigger("MeleeAttack");
                         lastTarget = target;
                         //plan b
@@ -332,6 +331,7 @@ public abstract class Creature : MonoBehaviour
         }
 
         currentHp-= damageAmount;
+        anim.SetTrigger("Damaged");
         if (currentHp <= 0)
         {
             LootManager.singleton.DropLoot(lootDrop, transform.position);
@@ -341,6 +341,7 @@ public abstract class Creature : MonoBehaviour
             Destroy(gameObject,2.5f);
             GetComponent<Rigidbody>().isKinematic = false;
             anim.enabled = false;
+
             //Vector3 force = new Vector3(Random.Range(-2, 2), Random.Range(1, 4), Random.Range(-2, 2)) * damageAmount;
             Vector3 attackDirection = (transform.position - attackPos).normalized;
             Vector3 force = attackDirection * 5 * damageAmount;
@@ -398,36 +399,45 @@ public abstract class Creature : MonoBehaviour
         }
     }
 
+    public void AttackStun()
+    {
+        attackStun = true;
+    }
+
     public void DealDamage() //for animation event
     {
         //rethink this segment
         if (lastTarget!=null)
         {
-            if (lastTarget.GetComponent<Enemy>() != null)
+            attackStun = false;
+
+            if ((creatureWeapon.stats[(int)Stats.AttackRange])*2 >= Vector3.Distance(lastTarget.position, transform.position))
             {
-                lastTarget.GetComponent<Enemy>().TakeDamage(attackDamage,transform.position);
-                //UIManager.singleton.CurrentEnemy(lastTarget.GetComponent<Enemy>());
-            }
-            else if (lastTarget.GetComponent<Ally>() != null)
-            {
-                lastTarget.GetComponent<Ally>().TakeDamage(attackDamage,transform.position);
-                UIManager.singleton.UpdateAllies();
-            }
-            else if (Random.Range(0, 100) > CharacterStats.singleton.characterStats[(int)Stats.DodgeChance])
-            {
-                //if you weren't able to dodge
-                CharacterStats.singleton.TakeDamage(attackDamage, DamageType.MeleePhysical);
-                CharacterVisual.singleton.React(Reactions.Damage);
+                if (lastTarget.GetComponent<Enemy>() != null)
+                {
+                    lastTarget.GetComponent<Enemy>().TakeDamage(attackDamage, transform.position);
+                    //UIManager.singleton.CurrentEnemy(lastTarget.GetComponent<Enemy>());
+                }
+                else if (lastTarget.GetComponent<Ally>() != null)
+                {
+                    lastTarget.GetComponent<Ally>().TakeDamage(attackDamage, transform.position);
+                    UIManager.singleton.UpdateAllies();
+                }
+                else if (Random.Range(0, 100) > CharacterStats.singleton.characterStats[(int)Stats.DodgeChance])
+                {
+                    //if you weren't able to dodge
+                    CharacterStats.singleton.TakeDamage(attackDamage, DamageType.MeleePhysical);
+                    CharacterVisual.singleton.React(Reactions.Damage);
+                }
             }
         }
-
-
     }
 
     public void ShootArrow() //for animation event
     {
         if (lastTarget!=null)
         {
+            attackStun = false;
             GameObject tempProjectile = Instantiate(creatureWeapon.projectilePrefab, transform.position, transform.rotation, null);
             tempProjectile.GetComponent<Attacks>().target = lastTarget.transform;
             tempProjectile.GetComponent<Attacks>().damage = attackDamage;

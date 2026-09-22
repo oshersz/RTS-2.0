@@ -30,12 +30,7 @@ public class RangeIndicator : MonoBehaviour
 
         if (Physics.Raycast(raycastFromMouse, out raycastHit, 500, floorMask))
         {
-            if (usingExternalPoint)
-            {
-                Vector3 spellDirection = new Vector3(raycastHit.point.x - character.transform.position.x, 0, raycastHit.point.z - character.transform.position.z); // making sure we don't get rotation on the X axis
-                spellDirection.Normalize();
-                raycastHit.point = character.transform.position + spellDirection * spellRadius;
-            }
+
         }
 
         if (rangeIndicatorType == RangeIndicatorType.characterDirectional)
@@ -46,6 +41,16 @@ public class RangeIndicator : MonoBehaviour
         }
         else if (rangeIndicatorType == RangeIndicatorType.worldPos)
         {
+            if (Vector3.Distance(raycastHit.point,character.transform.position)>spellRadius)
+            {
+                if (usingExternalPoint)
+                {
+                    Vector3 spellDirection = new Vector3(raycastHit.point.x - character.transform.position.x, 0, raycastHit.point.z - character.transform.position.z); // making sure we don't get rotation on the X axis
+                    spellDirection.Normalize();
+                    raycastHit.point = character.transform.position + (spellDirection * (spellRadius-1f));
+                }
+            }
+
             transform.position = raycastHit.point;
         }
         else if (rangeIndicatorType == RangeIndicatorType.characterStatic)
