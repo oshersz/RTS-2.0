@@ -60764,6 +60764,7 @@ GameObject:
   - component: {fileID: 1014683741}
   - component: {fileID: 1014683743}
   - component: {fileID: 1014683744}
+  - component: {fileID: 1014683745}
   m_Layer: 0
   m_Name: Game Managers
   m_TagString: Untagged
@@ -60897,6 +60898,22 @@ MonoBehaviour:
   interactable: {fileID: 1138958231492058370, guid: cf051cd419500de449816dbd17d753e1, type: 3}
   player: {fileID: 1632680591}
   monsterSpawner: {fileID: 1106113252}
+--- !u!114 &1014683745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014683740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29986f225362154418d95fc733425fd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverMask:
+    serializedVersion: 2
+    m_Bits: 35328
+  outlineMaterial: {fileID: 2100000, guid: 96ed822eae68a884e99742a3e96f0f66, type: 2}
 --- !u!1 &1015651334
 GameObject:
   m_ObjectHideFlags: 0
@@ -113122,6 +113139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e98478d0836560c42a148592a30c6daf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MH: {fileID: 1014683745}
   equippedWeapon: {fileID: 11400000, guid: 77055adcccc096e4aa726fbddfd32020, type: 2}
   weaponList:
   - {fileID: 11400000, guid: 77055adcccc096e4aa726fbddfd32020, type: 2}

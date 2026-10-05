@@ -20,6 +20,7 @@ public class BackPortal : MonoBehaviour
             other.GetComponent<CharacterController>().enabled = false;
             other.transform.position = returnPos;
             other.GetComponent<CharacterController>().enabled = true;
+            other.GetComponentInChildren<SpawnMonsters>().enabled = true;
 
             UIManager.singleton.TeleportAllies(returnPos);
             DungeonManager.DestroyDungeon();

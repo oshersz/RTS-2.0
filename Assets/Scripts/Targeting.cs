@@ -5,6 +5,7 @@ using TMPro;
 public class Targeting : MonoBehaviour
 {
     //[SerializeField] UIManager canvasUI;
+    [SerializeField] MouseHover MH;
     private LayerMask floorMask;
     private LayerMask enemyLayer;
     private LayerMask interactableLayer;
@@ -92,33 +93,15 @@ public class Targeting : MonoBehaviour
 
                 CM.FollowTarget(targetedEnemy.transform, attackRange);
 
+                MH.ApplyOutline(targetedEnemy.transform, Color.cyan);
+
             }
             else if (Physics.BoxCast(raycastFromMouse.origin, Vector3.one * 0.5f, raycastFromMouse.direction, out raycastHit, Quaternion.identity, 500, interactableLayer)) // checking if clicked on NPC //(Physics.Raycast(raycastFromMouse, out raycastHit, 500, interactableLayer))
             {
-                //raycastHit.transform.GetComponent<Interactable>().Interact();
-
-                /* //is done in character movement, duplicate.
-                if (Vector3.Distance(transform.position,raycastHit.transform.position)<3)
-                {
-                    raycastHit.transform.GetComponent<Interactable>().Interact();
-                }
-                */
-
                 CM.FollowTarget(raycastHit.transform, 2.5f, raycastHit.transform.GetComponent<Interactable>());
 
-                //I don't remember why I did this part, maybe to show the name
+                MH.ApplyOutline(raycastHit.transform, Color.green);
 
-                /*
-                if (raycastHit.transform.TryGetComponent(out targetedEnemy))
-                {
-                    if (targetedEnemy != null)
-                    {
-                        targetedEnemy = raycastHit.transform.GetComponent<Enemy>();
-                        UIManager.singleton.CurrentEnemy(targetedEnemy);
-                        //CM.FollowTarget(targetedEnemy.transform, 2);
-                    }
-                }
-                */
 
                 if (raycastHit.transform.GetComponent<Creature>() != null)
                 {

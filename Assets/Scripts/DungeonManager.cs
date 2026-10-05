@@ -246,10 +246,12 @@ public class DungeonManager : MonoBehaviour
                     GameObject backPortal = Instantiate(portal, dungeonSpawnPos, Quaternion.identity, parent.transform);
                     backPortal.GetComponent<BackPortal>().returnPos = returnPos;
 
-                    monsterSpawner.Spawn(dungeonSpawnPos, parent.transform,true); //spawning the boss
+                    monsterSpawner.Spawn(dungeonSpawnPos + Vector3.up, parent.transform,true); //spawning the boss
                 }
             }
         }
+
+        monsterSpawner.enabled = false; // preventing additional monster from spawning in the dungeon
     }
 
     public static void DestroyDungeon()

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class DungeonTile : MonoBehaviour
 {
-    public TileType tileType;
-    public Vector2 tileLocation;
+    [HideInInspector] public TileType tileType;
+    [HideInInspector] public Vector2 tileLocation;
     [SerializeField] GameObject wallTileGraphic;
     [SerializeField] GameObject startingTileGraphic;
     [SerializeField] GameObject floorTileGraphic;
@@ -31,11 +31,6 @@ public class DungeonTile : MonoBehaviour
         {
             emptyTileGraphic.SetActive(true);
         }
-    }
-
-    void Update()
-    {
-        
     }
 }
 

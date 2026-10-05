@@ -4,6 +4,7 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     private LayerMask floorMask;
+    private LayerMask wallMask;
     private CharacterController CC;
     //[Range(0,20)] [SerializeField] float moveSpeed; //movespeed is taken from character stats instead
     private Vector3 moveDirection;
@@ -31,8 +32,6 @@ public class CharacterMovement : MonoBehaviour
 
     public State inspectorState;
 
-    public Vector3 raycasthitpoint;
-
     struct Equipment
     {
         public GameObject prefab;
@@ -42,27 +41,14 @@ public class CharacterMovement : MonoBehaviour
     void Start()
     {
         CC = GetComponent<CharacterController>();
-        floorMask = 256;
+        //floorMask = 256;
+        floorMask = LayerMask.GetMask("Floor");
+        wallMask = LayerMask.GetMask("Wall");
+
     }
 
     void Update()
     {
-        raycasthitpoint = raycastHit.point;
-        /*
-        Debug.Log(charState.ToString());
-
-        if (Input.GetKeyDown(KeyCode.Space) && !rolling && Time.time > rollCD)
-        {
-            StartRoll();
-        }
-        if (rolling)
-        {
-            Roll();
-            if (rollTimer >= 1)
-                rolling = false;
-        }
-        else
-        */
         Move();
     }
 
@@ -78,12 +64,19 @@ public class CharacterMovement : MonoBehaviour
             }
             else
             {
-                //think about this more - what happens when you click on an empty space/position you can't go to?
-                raycastHit.point = transform.position;
-            }
-            
+                //raycastHit.point = transform.position;
 
-            
+                if (Physics.Raycast(raycastFromMouse, out raycastHit, 500, wallMask))
+                {
+                    raycastHit.point = new Vector3(raycastHit.point.x, transform.position.y, raycastHit.point.z); //preventing the char from unwanted rotation;
+                    moveDirection = raycastHit.point - transform.position;
+                }
+
+                if (Physics.Raycast(transform.position, moveDirection, out raycastHit, 500, wallMask))
+                {
+
+                }
+            }
 
             if (charState != State.AttackStun)
                 desiredRotation = Quaternion.LookRotation(moveDirection.normalized, Vector3.up);
@@ -95,26 +88,7 @@ public class CharacterMovement : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(1)) //movement with right mouse click
         {
-            /**
-            raycastFromMouse = Camera.main.ScreenPointToRay(Input.mousePosition); //because it's a raycast, it hits invisble colliders
-            if (Physics.Raycast(raycastFromMouse, out raycastHit, 500, floorMask))
-            {
-            }
-            raycastHit.point = new Vector3(raycastHit.point.x, transform.position.y, raycastHit.point.z); //preventing the char from unwanted rotation;
-
             CharacterVisual.singleton.MoveVFX(new Vector3(raycastHit.point.x, 0.25f, raycastHit.point.z));
-
-            moveDirection = raycastHit.point - transform.position;
-
-            if (charState != State.AttackStun)
-                desiredRotation = Quaternion.LookRotation(moveDirection.normalized, Vector3.up);
-
-            // unfollow
-            following = false;
-            followTarget = null;
-            */
-            CharacterVisual.singleton.MoveVFX(new Vector3(raycastHit.point.x, 0.25f, raycastHit.point.z));
-
         }
         transform.rotation = Quaternion.RotateTowards(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
 
