@@ -906,7 +906,7 @@ MonoBehaviour:
     m_Bits: 576
   hitLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 16384
   creatureWeapon: {fileID: 11400000, guid: 42bb9b21de2d47b41828e10467bf546c, type: 2}
   creatureName: Ally
   maxHp: 10

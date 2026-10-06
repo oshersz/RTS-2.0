@@ -73,10 +73,32 @@ public class DungeonManager : MonoBehaviour
                 if (j == 0 || j == columnLength - 1)
                 {
                     tileMatrix[i,j].tileType = TileType.Wall;
+
+                    if (j == 0)
+                    {
+                        tileMatrix[i, j].transform.localScale = new Vector3(tileMatrix[i, j].transform.localScale.x, 1, 5);
+                        tileMatrix[i, j].transform.position -= Vector3.forward * 20;
+                    }
+                    else if (j == columnLength - 1)
+                    {
+                        tileMatrix[i, j].transform.localScale = new Vector3(tileMatrix[i, j].transform.localScale.x, 1, 5);
+                        tileMatrix[i, j].transform.position += Vector3.forward * 20;
+                    }
                 }
                 if (i == 0 || i == rowLength - 1)
                 {
                     tileMatrix[i, j].tileType = TileType.Wall;
+
+                    if (i == 0)
+                    {
+                        tileMatrix[i, j].transform.localScale = new Vector3(5, 1, tileMatrix[i, j].transform.localScale.z);
+                        tileMatrix[i, j].transform.position -= Vector3.right * 20;
+                    }
+                    else if (i == rowLength - 1)
+                    {
+                        tileMatrix[i, j].transform.localScale = new Vector3(5, 1, tileMatrix[i, j].transform.localScale.z);
+                        tileMatrix[i, j].transform.position += Vector3.right * 20;
+                    }
                 }
             }
 
@@ -243,7 +265,7 @@ public class DungeonManager : MonoBehaviour
                     dungeonSpawnPos = new Vector3(spawnPos.x + i * 10, 0, spawnPos.z + j * 10);
                     LootManager.singleton.DropLoot(LootDrop.Rare, dungeonSpawnPos);
 
-                    GameObject backPortal = Instantiate(portal, dungeonSpawnPos, Quaternion.identity, parent.transform);
+                    GameObject backPortal = Instantiate(portal, dungeonSpawnPos + Vector3.up, Quaternion.identity, parent.transform);
                     backPortal.GetComponent<BackPortal>().returnPos = returnPos;
 
                     monsterSpawner.Spawn(dungeonSpawnPos + Vector3.up, parent.transform,true); //spawning the boss

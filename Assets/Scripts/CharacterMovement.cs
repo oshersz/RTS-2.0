@@ -183,7 +183,10 @@ public class CharacterMovement : MonoBehaviour
 
             moveDirection = followTargetPosition - transform.position;
 
-            desiredRotation = Quaternion.LookRotation(moveDirection.normalized, Vector3.up);
+            if (moveDirection.magnitude != 0)
+            {
+                desiredRotation = Quaternion.LookRotation(moveDirection.normalized, Vector3.up);
+            }
 
             CC.Move(moveDirection.normalized * CharacterStats.singleton.characterStats[(int)Stats.MoveSpeed] * Time.deltaTime);
         }
@@ -200,9 +203,11 @@ public class CharacterMovement : MonoBehaviour
 
             moveDirection = followTargetPosition - transform.position;
 
-            //if (Quaternion.LookRotation(moveDirection.normalized, Vector3.up))
 
-            desiredRotation = Quaternion.LookRotation(moveDirection.normalized, Vector3.up);
+            if (moveDirection.magnitude!= 0)
+            {
+                desiredRotation = Quaternion.LookRotation(moveDirection.normalized, Vector3.up);
+            }
         }
         else if (charState == State.Rolling)
         {

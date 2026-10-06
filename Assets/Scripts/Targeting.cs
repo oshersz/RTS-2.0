@@ -11,6 +11,7 @@ public class Targeting : MonoBehaviour
     private LayerMask interactableLayer;
     private Ray raycastFromMouse;
     private RaycastHit raycastHit;
+    private Collider[] overlapHits;
 
     private CharacterMovement CM;
 
@@ -171,11 +172,36 @@ public class Targeting : MonoBehaviour
                 activeSpellIndex = -1;
             }
         }
-
-        if (targetedEnemy == null)
+        else if (Input.GetKeyDown(KeyCode.A))
         {
-            //UIManager.singleton.CurrentEnemy(targetedEnemy);
-            //EquippedWeapon.target = null;
+            raycastFromMouse = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(raycastFromMouse.origin, raycastFromMouse.direction, out raycastHit, 500, floorMask)) //easier clicking on moving targets
+            {
+                overlapHits = Physics.OverlapSphere(raycastHit.point, 5f,enemyLayer);
+                CharacterVisual.singleton.MoveVFX(new Vector3(raycastHit.point.x, 0.25f, raycastHit.point.z), 1.5f, Color.red);
+                if (overlapHits.Length>0)
+                {
+                    Transform closestTarget = null;
+                    float closestDistance = float.MaxValue;
+                    for (int i=0;i<overlapHits.Length;i++)
+                    {
+                        if (Vector3.Distance(overlapHits[i].transform.position,raycastHit.point)<closestDistance)
+                        {
+                            closestDistance = Vector3.Distance(overlapHits[i].transform.position, raycastHit.point);
+                            closestTarget = overlapHits[i].transform;
+                        }
+                    }
+
+                    targetedEnemy = closestTarget.GetComponent<Enemy>();
+                    UIManager.singleton.CurrentEnemy(targetedEnemy);
+
+                    CM.FollowTarget(targetedEnemy.transform, attackRange);
+
+                    MH.ApplyOutline(targetedEnemy.transform, Color.cyan);
+
+                }
+            }
+
         }
     }
 

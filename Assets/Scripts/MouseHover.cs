@@ -20,29 +20,26 @@ public class MouseHover : MonoBehaviour
 
     private void ApplyOutline(Transform objectToOutline)
     {
-        if (objectToOutline!= lastObjectTargeted)
+        if (objectToOutline != lastObjectTargeted)
         {
-            //unoptimized way
             outlineMaterial.SetColor("_Color", Color.black);
+
             Material[] materialArray = new Material[2];
             materialArray[1] = outlineMaterial;
 
-            if (objectToOutline.GetComponent<Renderer>()!=null)
+            Renderer[] renderers;
+
+            renderers = objectToOutline.GetComponentsInChildren<Renderer>();
+
+            for (int i=0;i<renderers.Length;i++)
             {
-                materialArray[0] = objectToOutline.GetComponent<Renderer>().material;
-                objectToOutline.GetComponent<Renderer>().materials = materialArray;
-            }
-            else
-            {
-                for (int i=0;i<objectToOutline.childCount;i++)
-                {
-                    RecursiveOutline(objectToOutline.GetChild(i), materialArray);
-                }
+                materialArray[0] = renderers[i].material;
+                renderers[i].materials = materialArray;
             }
 
-            if (lastObjectTargeted!=null)
+            if (lastObjectTargeted != null)
             {
-                RemoveOutlineRecursive(lastObjectTargeted);
+                RemoveOutline(lastObjectTargeted);
             }
         }
         lastObjectTargeted = objectToOutline;
@@ -51,68 +48,35 @@ public class MouseHover : MonoBehaviour
     public void ApplyOutline(Transform objectToOutline,Color outlineColor)
     {
         outlineMaterial.SetColor("_Color", outlineColor);
+
         Material[] materialArray = new Material[2];
         materialArray[1] = outlineMaterial;
 
-        if (objectToOutline.GetComponent<Renderer>() != null)
+        Renderer[] renderers;
+
+        renderers = objectToOutline.GetComponentsInChildren<Renderer>();
+
+        for (int i = 0; i < renderers.Length; i++)
         {
-            materialArray[0] = objectToOutline.GetComponent<Renderer>().material;
-            objectToOutline.GetComponent<Renderer>().materials = materialArray;
-        }
-        else
-        {
-            for (int i = 0; i < objectToOutline.childCount; i++)
-            {
-                RecursiveOutline(objectToOutline.GetChild(i), materialArray);
-            }
+            materialArray[0] = renderers[i].material;
+            renderers[i].materials = materialArray;
         }
     }
 
-    private void RecursiveOutline(Transform child,Material[] materialArray)
+    private void RemoveOutline(Transform objectToRemoveOutline)
     {
-        //Debug.Log("fuck");
-        if (child.GetComponent<Renderer>()!= null)
+        Renderer[] renderers;
+
+        renderers = objectToRemoveOutline.GetComponentsInChildren<Renderer>();
+
+        Material[] materialArray = new Material[1];
+
+        for (int i = 0; i < renderers.Length; i++)
         {
-            materialArray[0] = child.GetComponent<Renderer>().material;
-            child.GetComponent<Renderer>().materials = materialArray;
+            materialArray[0] = renderers[i].materials[0];
+            renderers[i].materials = materialArray;
         }
-        if (child.childCount == 0)
-        {
-            return;
-        }
-        else
-        {
-            for (int i=0;i<child.childCount;i++)
-            {
-                RecursiveOutline(child.GetChild(i),materialArray);
-            }
-        }
+
     }
 
-    private void RemoveOutlineRecursive(Transform objectToRemoveOutline)
-    {
-        if (objectToRemoveOutline.GetComponent<Renderer>() != null)
-        {
-            Material[] materialArray = new Material[1];
-
-            materialArray[0] = objectToRemoveOutline.GetComponent<Renderer>().materials[0];
-
-            objectToRemoveOutline.GetComponent<Renderer>().materials = materialArray;
-        }
-        if (objectToRemoveOutline.childCount == 0)
-        {
-            return;
-        }
-        else
-        {
-            for (int i = 0; i < objectToRemoveOutline.childCount; i++)
-            {
-                RemoveOutlineRecursive(objectToRemoveOutline.GetChild(i));
-            }
-        }
-
-
-
-
-    }
 }

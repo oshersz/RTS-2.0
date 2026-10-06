@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI enemyName;
     [SerializeField] Slider enemyHP;
     [SerializeField] Slider enemyTempHP;
+    private float hpDecaySpeed;
     private Creature currentEnemy;
     [SerializeField] GameObject targetingArrow;
     [SerializeField] ParticleSystem selectVFX;
@@ -80,7 +81,7 @@ public class UIManager : MonoBehaviour
 
             if (enemyTempHP.value>enemyHP.value)
             {
-                enemyTempHP.value -= Time.deltaTime * 0.5f;
+                enemyTempHP.value -= Time.deltaTime * hpDecaySpeed ; //0.5f
             }
             else
             {
@@ -121,6 +122,7 @@ public class UIManager : MonoBehaviour
             currentEnemy = targetedEnemy;
             enemyName.text = currentEnemy.creatureName;
             enemyHP.value = Mathf.InverseLerp(0, currentEnemy.maxHp, currentEnemy.currentHp);
+            hpDecaySpeed = (enemyTempHP.value - enemyHP.value) * 1.5f; //no matter the damage dealt the effect duration will remain the same
         }
         else
         {

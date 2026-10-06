@@ -84,9 +84,11 @@ public class Ally : Creature
             {
                 Move(closestPlayer);
             }
-            Move();
+            else
+            {
+                Move();
+            }
         }
-
     }
 
     private void CheckCollision()

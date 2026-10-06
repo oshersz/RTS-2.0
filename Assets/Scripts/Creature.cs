@@ -159,7 +159,7 @@ public abstract class Creature : MonoBehaviour
             return;
         }
 
-        if (Vector3.Distance(target.position,transform.position)<detectionRadius && Vector3.Distance(target.position, transform.position) > 1.5f)
+        if ((Vector3.Distance(target.position,transform.position)<detectionRadius && Vector3.Distance(target.position, transform.position) > 1.5f) || (behaviorType == BehaviorType.Friendly && target.gameObject.layer== LayerMask.NameToLayer("Player")))
         {
             idleHealingTimer = 0; //passive healing timer is reset
             target.position = new Vector3(target.position.x, transform.position.y, target.position.z); //preventing accidental Y movement
@@ -325,7 +325,7 @@ public abstract class Creature : MonoBehaviour
     */
     public virtual void TakeDamage(float damageAmount,Vector3 attackPos)
     {
-        if (currentHp == maxHp)
+        if (currentHp == maxHp && behaviorType!= BehaviorType.Friendly)
         {
             detectionRadius *= 1.5f;
         }
@@ -407,10 +407,9 @@ public abstract class Creature : MonoBehaviour
     public void DealDamage() //for animation event
     {
         //rethink this segment
+        attackStun = false;
         if (lastTarget!=null)
         {
-            attackStun = false;
-
             if ((creatureWeapon.stats[(int)Stats.AttackRange])*2 >= Vector3.Distance(lastTarget.position, transform.position))
             {
                 if (lastTarget.GetComponent<Enemy>() != null)
@@ -435,9 +434,9 @@ public abstract class Creature : MonoBehaviour
 
     public void ShootArrow() //for animation event
     {
+        attackStun = false;
         if (lastTarget!=null)
         {
-            attackStun = false;
             GameObject tempProjectile = Instantiate(creatureWeapon.projectilePrefab, transform.position, transform.rotation, null);
             tempProjectile.GetComponent<Attacks>().target = lastTarget.transform;
             tempProjectile.GetComponent<Attacks>().damage = attackDamage;

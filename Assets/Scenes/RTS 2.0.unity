@@ -113101,7 +113101,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inspectorState: 0
-  raycasthitpoint: {x: 0, y: 0, z: 0}
 --- !u!143 &1632680593
 CharacterController:
   m_ObjectHideFlags: 0
